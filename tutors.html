@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Tutors - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <a href="/index.html" class="flex items-center gap-2 no-underline group">
+        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 p-1.5 rounded-lg group-hover:shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span class="text-xl font-black text-slate-900 tracking-tighter">PeerTutor <span class="text-purple-500 text-xs font-bold uppercase tracking-widest ml-1 italic">Explore</span></span>
+      </a>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/student-search.html" class="text-slate-600 hover:text-purple-600 font-bold no-underline transition-colors">Find Tutors</a>
+        <a href="/progress.html" class="text-slate-600 hover:text-green-600 font-bold no-underline transition-colors">My Progress</a>
+        <div class="flex items-center gap-3 pl-4 border-l border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center text-purple-500 border border-purple-100 shadow-inner group cursor-pointer hover:shadow-lg transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-[10px] text-slate-300 font-black uppercase tracking-[0.2em] mb-12">
+        <a href="/index.html" class="hover:text-purple-600 transition-colors">Home</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        <a href="/student-search.html" class="hover:text-purple-600 transition-colors">Search</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        <span class="text-slate-500" id="breadcrumb-current">All Tutors</span>
+      </nav>
+
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- Sidebar Filters -->
+        <aside class="w-full lg:w-72 space-y-8">
+          <div class="bg-white p-8 rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.02)] border border-slate-50">
+            <h3 class="font-black text-slate-900 mb-8 flex items-center gap-3 tracking-tight text-xl italic">
+              <div class="bg-purple-100 p-2 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="2" y1="14" x2="6" y2="14"/><line x1="10" y1="8" x2="14" y2="8"/><line x1="18" y1="16" x2="22" y2="16"/></svg>
+              </div>
+              Filters
+            </h3>
+            
+            <div class="space-y-10">
+              <!-- Level Filter -->
+              <div>
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-6">Academic Level</p>
+                <div class="space-y-4">
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" id="filter-undergrad" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">Undergraduate</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" id="filter-grad" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">Graduate</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Rating Filter -->
+              <div>
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-6">Rating</p>
+                <div class="space-y-4">
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="radio" name="rating" value="5" class="peer appearance-none w-6 h-6 rounded-full border-2 border-slate-100 checked:border-purple-600 transition-all cursor-pointer">
+                      <div class="absolute w-3 h-3 bg-purple-600 rounded-full left-1.5 hidden peer-checked:block"></div>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">5 Stars Only</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="radio" name="rating" value="4" class="peer appearance-none w-6 h-6 rounded-full border-2 border-slate-100 checked:border-purple-600 transition-all cursor-pointer">
+                      <div class="absolute w-3 h-3 bg-purple-600 rounded-full left-1.5 hidden peer-checked:block"></div>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">4+ Stars</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="radio" name="rating" value="3" class="peer appearance-none w-6 h-6 rounded-full border-2 border-slate-100 checked:border-purple-600 transition-all cursor-pointer">
+                      <div class="absolute w-3 h-3 bg-purple-600 rounded-full left-1.5 hidden peer-checked:block"></div>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">3+ Stars</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="radio" name="rating" value="2" class="peer appearance-none w-6 h-6 rounded-full border-2 border-slate-100 checked:border-purple-600 transition-all cursor-pointer">
+                      <div class="absolute w-3 h-3 bg-purple-600 rounded-full left-1.5 hidden peer-checked:block"></div>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">2+ Stars</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Teaching Mode Filter -->
+              <div>
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-6">Teaching Mode</p>
+                <div class="space-y-4">
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" id="filter-online" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">Online</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" id="filter-f2f" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">Face-to-Face</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Price Range Filter -->
+              <div>
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-6">Price Range</p>
+                <div class="space-y-4">
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" name="price-range" value="1-2" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">1.000–2.000 OMR/hr</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" name="price-range" value="2-3" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">2.000–3.000 OMR/hr</span>
+                  </label>
+                  <label class="flex items-center gap-4 text-sm text-slate-500 cursor-pointer group">
+                    <div class="relative flex items-center">
+                      <input type="checkbox" name="price-range" value="3+" class="peer appearance-none w-6 h-6 rounded-lg border-2 border-slate-100 checked:bg-purple-600 checked:border-purple-600 transition-all cursor-pointer">
+                      <svg class="absolute w-4 h-4 text-white left-1 pointer-events-none hidden peer-checked:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span class="group-hover:text-purple-600 font-bold transition-colors">3.000 and up OMR/hr</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Filter Actions -->
+              <div class="pt-6 space-y-4">
+                <button id="apply-filters" class="w-full py-5 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-purple-200 transition-all active:scale-95 uppercase tracking-widest text-[10px]">Refresh Results</button>
+                <button id="clear-filters" class="w-full py-5 bg-slate-50 text-slate-400 font-black rounded-2xl border-2 border-transparent hover:border-slate-100 transition-all uppercase tracking-widest text-[10px]">Reset All</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-indigo-100">
+            <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-purple-600/20 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+              <div class="bg-white/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 border border-white/5 backdrop-blur-md">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h4 class="text-2xl font-black mb-3 tracking-tighter leading-tight italic">Share your <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400">knowledge</span></h4>
+              <p class="text-sm text-slate-400 mb-8 font-medium leading-relaxed">Join our elite circle of peer tutors and make an impact.</p>
+              <button onclick="window.location.href='/tutor-registration.html'" class="w-full py-4 bg-white text-slate-900 font-black rounded-2xl hover:bg-purple-50 transition-all uppercase tracking-widest text-[10px] shadow-lg">Get Started</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <h2 id="page-title" class="text-5xl font-black text-slate-900 tracking-tighter italic mb-3">Tutor <span class="text-purple-600">Circle</span></h2>
+              <p id="tutor-count" class="text-slate-400 font-bold uppercase tracking-widest text-[10px] px-3 py-1 bg-white border border-slate-100 rounded-lg inline-block shadow-sm">Searching...</p>
+            </div>
+            
+            <div class="flex items-center gap-4 bg-white p-2 rounded-2xl border border-slate-50 shadow-sm">
+              <span class="text-[10px] text-slate-300 font-black uppercase tracking-widest ml-4">Order By:</span>
+              <select id="sort-select" class="bg-slate-50 border-none rounded-xl px-4 py-2 text-xs font-black text-slate-600 outline-none focus:ring-0 appearance-none cursor-pointer hover:bg-slate-100 transition-all">
+                <option value="rating">Top Rated</option>
+                <option value="price-low">Lowest Price</option>
+                <option value="price-high">Highest Price</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="tutors-grid" class="space-y-16">
+            <!-- Tutors will be injected here -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="empty-state" class="hidden text-center py-20 bg-white rounded-3xl border border-dashed border-slate-200">
+            <div class="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">No results found</h3>
+            <p id="empty-state-message" class="text-slate-500 mb-8">Try adjusting your filters or search for a different subject.</p>
+            <button onclick="window.location.href='/student-search.html'" class="px-8 py-3 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 transition-colors">Return to Search</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
+        © 2024 PeerTutor Platform. All rights reserved.
+      </div>
+    </footer>
+
+    <script type="module">
+      import { MOCK_TUTORS, COURSES } from '/src/data.ts';
+      
+      const params = new URLSearchParams(window.location.search);
+      const subject = params.get('subject');
+      const query = params.get('q');
+      
+      const title = document.getElementById('page-title');
+      const breadcrumb = document.getElementById('breadcrumb-current');
+      const count = document.getElementById('tutor-count');
+      const grid = document.getElementById('tutors-grid');
+      const emptyState = document.getElementById('empty-state');
+      const sortSelect = document.getElementById('sort-select');
+
+      // Filter elements
+      const undergradCheck = document.getElementById('filter-undergrad');
+      const gradCheck = document.getElementById('filter-grad');
+      const onlineCheck = document.getElementById('filter-online');
+      const f2fCheck = document.getElementById('filter-f2f');
+      const priceRangeChecks = document.getElementsByName('price-range');
+      const applyBtn = document.getElementById('apply-filters');
+      const clearBtn = document.getElementById('clear-filters');
+
+      const emptyStateMessage = document.getElementById('empty-state-message');
+
+      function normalizeDash(str) {
+        if (!str) return '';
+        return str.replace(/\s*[—–-]\s*/g, ' - ').toLowerCase().trim();
+      }
+
+      function extractCourseCode(str) {
+        if (!str) return '';
+        const match = str.match(/[A-Z]{4}\d{4}/i);
+        return match ? match[0].toUpperCase() : '';
+      }
+
+      function isMatch(tutorSubject, courseName) {
+        const normTutor = normalizeDash(tutorSubject);
+        const normCourse = normalizeDash(courseName);
+        
+        // Match by full normalized name
+        if (normTutor === normCourse) return true;
+        
+        // Match by course code
+        const tutorCode = extractCourseCode(tutorSubject);
+        const courseCode = extractCourseCode(courseName);
+        if (tutorCode && courseCode && tutorCode === courseCode) return true;
+        
+        // Match if one contains the other (for cases like "Grammar" matching 
+        // "EDEN1101 – Advanced English Language Awareness: Grammar")
+        if (normCourse.includes(normTutor) || normTutor.includes(normCourse)) return true;
+
+        return false;
+      }
+
+      function renderTutors(tutors, matchedCourses = []) {
+        grid.innerHTML = '';
+        count.innerText = `${tutors.length} expert tutors found`;
+
+        if (tutors.length === 0 && matchedCourses.length === 0) {
+          emptyState.classList.remove('hidden');
+          grid.classList.add('hidden');
+          if (query) {
+            emptyStateMessage.innerText = "No course found. Please try another course name or code.";
+          } else {
+            emptyStateMessage.innerText = "Try adjusting your filters or search for a different subject.";
+          }
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+        grid.classList.remove('hidden');
+
+        // If we have matched courses, display them first
+        if (matchedCourses.length > 0) {
+          matchedCourses.forEach(course => {
+            const courseTutors = tutors.filter(t => isMatch(t.subject, course.name));
+            
+            const courseSection = document.createElement('div');
+            courseSection.className = 'space-y-6';
+            courseSection.innerHTML = `
+              <div class="bg-gradient-to-r from-purple-50 to-white p-6 rounded-3xl border border-purple-100/50">
+                <div class="flex items-center gap-4">
+                  <div class="bg-white p-3 rounded-2xl shadow-sm border border-purple-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xl font-black text-slate-900 tracking-tight">${course.name}</h4>
+                    <p class="text-[10px] text-purple-600 font-bold uppercase tracking-widest">${course.creditHours} Credit Hours Course</p>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                ${courseTutors.length > 0 ? courseTutors.map(tutor => createTutorCardHTML(tutor)).join('') : `
+                  <div class="col-span-full py-8 text-center bg-white rounded-3xl border border-dashed border-slate-100">
+                    <p class="text-slate-400 font-medium italic">No tutors currently listed for this specific course.</p>
+                  </div>
+                `}
+              </div>
+            `;
+            grid.appendChild(courseSection);
+          });
+
+          // Section removed as per user request
+        } else {
+          // No courses matched, but maybe creators/tutors matched by name
+          const container = document.createElement('div');
+          container.className = 'grid grid-cols-1 md:grid-cols-2 gap-8';
+          tutors.forEach(tutor => {
+            container.innerHTML += createTutorCardHTML(tutor);
+          });
+          grid.appendChild(container);
+        }
+      }
+
+      function createTutorCardHTML(tutor) {
+        const courseInfo = COURSES.find(c => c.name === tutor.subject);
+        const creditHours = courseInfo ? courseInfo.creditHours : 3;
+        
+        return `
+          <div class="bg-white rounded-[2.5rem] p-10 shadow-sm hover:shadow-2xl hover:shadow-purple-900/10 transition-all duration-300 border border-slate-50 flex flex-col group relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-2 h-full bg-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="flex items-start gap-6 mb-8">
+              <div class="relative">
+                <img src="${tutor.photo}" alt="${tutor.name}" class="w-24 h-24 rounded-[2rem] object-cover shadow-xl border-4 border-white group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer">
+                <div class="absolute -bottom-2 -right-2 bg-green-500 border-4 border-white w-8 h-8 rounded-full shadow-lg" title="Online now"></div>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-black text-2xl text-slate-900 tracking-tighter group-hover:text-purple-600 transition-colors">${tutor.name}</h3>
+                  <div class="flex items-center gap-1.5 bg-amber-400 px-3 py-1 rounded-xl shadow-lg shadow-amber-100 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <span class="font-black text-sm">${tutor.rating}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 mb-2">
+                  <p class="text-purple-600 font-black uppercase tracking-widest text-[10px]">${tutor.subject}</p>
+                  <span class="px-2 py-0.5 bg-purple-50 text-purple-600 rounded-md text-[9px] font-black border border-purple-100">${creditHours} CH</span>
+                </div>
+                <div class="flex items-center gap-2 text-slate-400 font-bold uppercase tracking-widest text-[9px]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  <span>${tutor.level}</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="text-slate-500 text-sm font-medium mb-8 line-clamp-3 flex-grow leading-relaxed">
+              ${tutor.description}
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-10">
+              ${tutor.teachingModes.map(mode => `
+                <span class="px-4 py-1.5 bg-purple-50 text-purple-700 rounded-xl text-[10px] font-black uppercase tracking-widest border border-purple-100 flex items-center gap-2">
+                  ${mode}
+                </span>
+              `).join('')}
+              <span class="px-4 py-1.5 bg-indigo-50 text-indigo-700 rounded-xl text-[10px] font-black uppercase tracking-widest border border-indigo-100">
+                ${tutor.sessionsPerWeek} sessions/week
+              </span>
+            </div>
+
+            <div class="pt-8 border-t border-slate-50 flex items-center justify-between">
+              <div class="flex flex-col">
+                <span class="text-[9px] text-slate-300 uppercase font-black tracking-[0.2em] mb-1">Hourly Rate</span>
+                <span class="text-2xl font-black text-slate-900 tracking-tighter">${tutor.pricing.hourly.toFixed(3)} OMR<span class="text-sm font-medium text-slate-300">/hr</span></span>
+              </div>
+              <a href="/tutor-profile.html?id=${tutor.id}" class="px-8 py-4 bg-gradient-to-br from-purple-600 to-indigo-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-purple-200 transition-all uppercase tracking-widest text-[10px] no-underline">Profile</a>
+            </div>
+          </div>
+        `;
+      }
+
+      function applyFilters() {
+        let filtered = MOCK_TUTORS.filter(t => t.role === 'Tutor');
+        let matchedCourses = [];
+
+        // Base search/subject filter
+        if (subject) {
+          title.innerText = `${subject} Tutors`;
+          breadcrumb.innerText = subject;
+          filtered = filtered.filter(t => isMatch(t.subject, subject));
+          const course = COURSES.find(c => isMatch(subject, c.name));
+          if (course) matchedCourses = [course];
+        } else if (query) {
+          title.innerText = `Search results for "${query}"`;
+          breadcrumb.innerText = 'Search Results';
+          
+          const q = query.toLowerCase().trim();
+          
+          // Match courses
+          matchedCourses = COURSES.filter(c => 
+            c.name.toLowerCase().includes(q)
+          );
+
+          // Match tutors
+          filtered = filtered.filter(t => 
+            t.name.toLowerCase().includes(q) || 
+            t.subject.toLowerCase().includes(q)
+          );
+        } else {
+          title.innerText = `Available Tutors`;
+          breadcrumb.innerText = 'All Tutors';
+          matchedCourses = [];
+        }
+
+        // Level Filter
+        const selectedLevels = [];
+        if (undergradCheck.checked) selectedLevels.push('Undergraduate');
+        if (gradCheck.checked) selectedLevels.push('Graduate');
+        if (selectedLevels.length > 0) {
+          filtered = filtered.filter(t => selectedLevels.includes(t.level));
+        }
+
+        // Mode Filter
+        const selectedModes = [];
+        if (onlineCheck.checked) selectedModes.push('Online');
+        if (f2fCheck.checked) selectedModes.push('Face-to-Face');
+        if (selectedModes.length > 0) {
+          filtered = filtered.filter(t => t.teachingModes.some(m => selectedModes.includes(m)));
+        }
+
+        // Rating Filter
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        if (selectedRating) {
+          const minRating = parseFloat(selectedRating.value);
+          filtered = filtered.filter(t => t.rating >= minRating);
+        }
+
+        // Price Range Filter
+        const selectedPriceRanges = Array.from(priceRangeChecks).filter(i => i.checked).map(i => i.value);
+        if (selectedPriceRanges.length > 0) {
+          filtered = filtered.filter(t => {
+            const p = t.pricing.hourly;
+            return selectedPriceRanges.some(range => {
+              if (range === '1-2') return p >= 1 && p <= 2;
+              if (range === '2-3') return p > 2 && p <= 3;
+              if (range === '3+') return p > 3;
+              return false;
+            });
+          });
+        }
+
+        // Sorting
+        const sortBy = sortSelect.value;
+        if (sortBy === 'rating') {
+          filtered.sort((a, b) => b.rating - a.rating);
+        } else if (sortBy === 'price-low') {
+          filtered.sort((a, b) => a.pricing.hourly - b.pricing.hourly);
+        } else if (sortBy === 'price-high') {
+          filtered.sort((a, b) => b.pricing.hourly - a.pricing.hourly);
+        }
+
+        renderTutors(filtered, matchedCourses);
+      }
+
+      applyBtn.onclick = applyFilters;
+      clearBtn.onclick = () => {
+        undergradCheck.checked = false;
+        gradCheck.checked = false;
+        onlineCheck.checked = false;
+        f2fCheck.checked = false;
+        priceRangeChecks.forEach(i => i.checked = false);
+        const checkedRating = document.querySelector('input[name="rating"]:checked');
+        if (checkedRating) checkedRating.checked = false;
+        applyFilters();
+      };
+
+      sortSelect.onchange = applyFilters;
+
+      // Initial render
+      applyFilters();
+    </script>
+  </body>
+</html>

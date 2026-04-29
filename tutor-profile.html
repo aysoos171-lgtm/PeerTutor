@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutor Profile - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+  </head>
+  <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <a href="/index.html" class="flex items-center gap-2 no-underline group">
+        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 p-1.5 rounded-lg group-hover:shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span class="text-xl font-black text-slate-900 tracking-tighter">PeerTutor <span class="text-purple-500 text-xs font-bold uppercase tracking-widest ml-1 italic tracking-normal">Profile</span></span>
+      </a>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/student-search.html" class="text-slate-600 hover:text-purple-600 font-bold no-underline transition-colors">Find Tutors</a>
+        <a href="/progress.html" class="text-slate-600 hover:text-green-600 font-bold no-underline transition-colors">My Progress</a>
+        <div class="flex items-center gap-3 pl-4 border-l border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center text-purple-500 border border-purple-100 shadow-inner group hover:shadow-lg transition-all cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main id="profile-container" class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow">
+      <!-- Content will be injected here -->
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+      <!-- Step 1: Payment Selection -->
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl transform transition-all scale-95 opacity-0 duration-300" id="payment-view">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-bold text-slate-900">Payment Method</h3>
+          <button id="cancel-payment" class="text-slate-400 hover:text-slate-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        
+        <p class="text-slate-500 mb-8">Please select your preferred payment method to complete the booking.</p>
+        
+        <div class="grid grid-cols-1 gap-3 mb-8">
+          <button class="payment-option flex items-center justify-between p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all group" data-method="Visa / MasterCard">
+            <div class="flex items-center gap-3">
+              <div class="bg-slate-100 p-2 rounded-lg group-hover:bg-blue-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-600 group-hover:text-blue-600"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <span class="font-bold text-slate-700 group-hover:text-blue-900">Visa / MasterCard</span>
+            </div>
+            <div class="w-5 h-5 rounded-full border-2 border-slate-200 group-hover:border-blue-600 group-hover:bg-blue-600 flex items-center justify-center">
+              <div class="w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100"></div>
+            </div>
+          </button>
+          
+          <button class="payment-option flex items-center justify-between p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all group" data-method="Apple Pay">
+            <div class="flex items-center gap-3">
+              <div class="bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 flex items-center gap-1 shadow-sm group-hover:border-blue-200 h-9">
+                <svg width="15" height="18" viewBox="0 0 256 315" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" fill="black">
+                  <path d="M213.803 167.03c.442 47.58 41.74 63.413 42.147 63.615-.35 1.116-6.599 22.563-21.757 44.716-13.104 19.153-26.705 38.235-48.13 38.63-21.05.394-27.815-12.44-51.837-12.44-24.03 0-31.504 12.061-51.834 12.833-20.676.772-36.17-20.68-49.348-39.717-26.938-38.908-47.491-110.012-19.748-158.151 13.758-23.89 38.334-39.027 64.933-39.42 20.287-.393 39.43 13.614 51.846 13.614 12.426 0 35.62-16.67 59.84-14.195 10.134.422 38.604 4.093 56.81 30.793-1.47.913-33.935 19.794-33.533 59.935zM175.769 54.085c10.877-13.21 18.242-31.554 16.225-49.855-15.713.645-34.705 10.507-45.977 23.658-10.1 11.655-18.929 30.393-16.56 48.276 17.534 1.366 35.435-8.869 46.312-22.079z"/>
+                </svg>
+                <span class="text-base font-bold text-black tracking-tight mb-0.5">Pay</span>
+              </div>
+              <span class="font-bold text-slate-700 group-hover:text-blue-900">Apple Pay</span>
+            </div>
+            <div class="w-5 h-5 rounded-full border-2 border-slate-200 group-hover:border-blue-600 group-hover:bg-blue-600 flex items-center justify-center">
+              <div class="w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100"></div>
+            </div>
+          </button>
+          
+          <button id="cash-payment-option" class="payment-option flex items-center justify-between p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-600 hover:bg-blue-50 transition-all group" data-method="Cash">
+            <div class="flex items-center gap-3">
+              <div class="bg-slate-100 p-2 rounded-lg group-hover:bg-blue-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-600 group-hover:text-blue-600"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+              </div>
+              <span class="font-bold text-slate-700 group-hover:text-blue-900">Cash</span>
+            </div>
+            <div class="w-5 h-5 rounded-full border-2 border-slate-200 group-hover:border-blue-600 group-hover:bg-blue-600 flex items-center justify-center">
+              <div class="w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100"></div>
+            </div>
+          </button>
+        </div>
+
+        <button id="confirm-payment-btn" class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-purple-100 transition-all uppercase tracking-widest text-xs disabled:opacity-50 disabled:cursor-not-allowed" disabled>Pay & Confirm</button>
+      </div>
+
+      <!-- Step 2: Visa Payment Form -->
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl transform transition-all scale-95 opacity-0 duration-300 hidden" id="visa-payment-view">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-bold text-slate-900">Visa / MasterCard</h3>
+          <button id="cancel-visa" class="text-slate-400 hover:text-slate-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 mb-6">
+          <p class="text-xs font-black text-blue-400 uppercase tracking-widest mb-1">Total Amount</p>
+          <p class="text-xl font-black text-blue-900" id="visa-amount-display">Amount to Pay: 0.000 OMR</p>
+        </div>
+
+        <form id="visa-form" class="space-y-4">
+          <div>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Cardholder Name</label>
+            <input type="text" id="visa-name" required class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm font-bold text-slate-700" placeholder="John Doe">
+          </div>
+          <div>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Card Number</label>
+            <input type="text" id="visa-number" required maxlength="16" class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm font-bold text-slate-700" placeholder="0000 0000 0000 0000">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Expiry Date</label>
+              <input type="text" id="visa-expiry" required placeholder="MM/YY" class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm font-bold text-slate-700">
+            </div>
+            <div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">CVV</label>
+              <input type="text" id="visa-cvv" required maxlength="3" placeholder="000" class="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm font-bold text-slate-700">
+            </div>
+          </div>
+
+          <p id="visa-error" class="text-red-500 text-[10px] font-black uppercase tracking-widest hidden text-center mb-4"></p>
+
+          <div class="grid grid-cols-2 gap-3 mt-6">
+            <button type="button" id="cancel-visa-btn" class="w-full py-4 bg-slate-100 text-slate-600 font-black rounded-2xl hover:bg-slate-200 transition-all uppercase tracking-widest text-xs">Cancel</button>
+            <button type="submit" id="pay-now-btn" class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-purple-100 transition-all uppercase tracking-widest text-xs">Pay Now</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 3: Final Success -->
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl text-center transform transition-all scale-95 opacity-0 duration-300 hidden" id="success-view">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-2">Payment successful</h3>
+        <p class="text-slate-500 font-bold mb-6">Your booking is confirmed.</p>
+        
+        <div id="booking-details-summary" class="bg-slate-50 p-6 rounded-3xl border border-slate-100 space-y-4 mb-8 text-left">
+           <div class="flex items-center gap-3">
+              <div class="bg-white p-2 rounded-xl shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em]">Selected Tutor</p>
+                <p class="text-sm font-black text-slate-900" id="success-tutor-name">-</p>
+              </div>
+           </div>
+
+           <div class="flex items-center gap-3">
+              <div class="bg-white p-2 rounded-xl shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em]">Date & Time</p>
+                <p class="text-sm font-black text-slate-900" id="success-date-time">-</p>
+              </div>
+           </div>
+
+           <div id="success-room-container" class="hidden flex items-center gap-3">
+              <div class="bg-white p-2 rounded-xl shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em]">Venue Location</p>
+                <p class="text-sm font-black text-slate-900" id="success-room-info">-</p>
+              </div>
+           </div>
+        </div>
+
+        <div id="online-reminder" class="hidden space-y-4 mb-8">
+          <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 text-left">
+            <p class="text-sm text-blue-800 font-medium">This session will be conducted via Microsoft Teams.</p>
+            <p class="text-xs text-blue-600 mt-1">The Microsoft Teams link will be shared after confirmation.</p>
+          </div>
+        </div>
+        
+        <p class="text-slate-500 mb-8" id="general-success-note">You'll receive a calendar invite and session details shortly.</p>
+        <button id="close-modal" class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-purple-100 transition-all uppercase tracking-widest text-xs">Done</button>
+      </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+      <div class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl transform transition-all scale-95 opacity-0 duration-300" id="share-modal-content">
+        <div class="flex items-center justify-between mb-8">
+          <h3 class="text-2xl font-black text-slate-900 italic tracking-tighter">Share <span class="text-purple-600">Profile</span></h3>
+          <button id="close-share" class="p-2 hover:bg-slate-100 rounded-xl transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <button id="share-whatsapp" class="flex flex-col items-center gap-3 p-4 rounded-3xl bg-green-50 hover:bg-green-100 transition-all group">
+            <div class="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-green-200 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14 8.38 8.38 0 0 1 3.8.9L21 3z"/></svg>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-green-700">WhatsApp</span>
+          </button>
+          
+          <button id="share-copy" class="flex flex-col items-center gap-3 p-4 rounded-3xl bg-purple-50 hover:bg-purple-100 transition-all group">
+            <div class="w-12 h-12 bg-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-purple-200 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-purple-700">Copy Link</span>
+          </button>
+
+          <button id="share-instagram" class="flex flex-col items-center gap-3 p-4 rounded-3xl bg-pink-50 hover:bg-pink-100 transition-all group">
+            <div class="w-12 h-12 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-pink-200 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-pink-700">Instagram</span>
+          </button>
+
+          <button id="share-tiktok" class="flex flex-col items-center gap-3 p-4 rounded-3xl bg-slate-900 hover:bg-black transition-all group">
+            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-black shadow-lg shadow-slate-200 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25v178.72A162.55 162.55 0 1 1 185 188.31v89.89a74.62 74.62 0 1 0 52.23 71.18V0h88a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z"/></svg>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">TikTok</span>
+          </button>
+        </div>
+        
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+           <p class="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-2">Internal Link</p>
+           <p id="share-url-text" class="text-[10px] font-bold text-slate-500 truncate italic"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div id="chat-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+      <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl flex flex-col h-[600px] overflow-hidden transform transition-all scale-95 opacity-0 duration-300" id="chat-modal-content">
+        <!-- Header -->
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+          <div class="flex items-center gap-3">
+            <img id="chat-tutor-photo" src="" alt="" class="w-10 h-10 rounded-full object-cover border-2 border-white/20" referrerPolicy="no-referrer">
+            <div>
+              <h3 class="font-black tracking-tight" id="chat-tutor-name">Tutor Name</h3>
+              <p class="text-[10px] text-purple-100 font-bold uppercase tracking-widest">Online Now</p>
+            </div>
+          </div>
+          <button id="close-chat" class="p-2 hover:bg-white/10 rounded-xl transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        
+        <!-- Messages -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50">
+          <div class="flex justify-start">
+            <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 max-w-[80%]">
+              <p class="text-slate-600 text-sm" id="chat-welcome-msg">Hello! How can I help you today?</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Input -->
+        <div class="p-4 bg-white border-t border-slate-100">
+          <div class="flex gap-2">
+            <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm">
+            <button id="send-chat" class="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
+        © 2024 PeerTutor Platform. All rights reserved.
+      </div>
+    </footer>
+
+    <script type="module">
+      import { MOCK_TUTORS, COURSES } from '/src/data.ts';
+      
+      const ROOMS = [
+        'D05', 'D06', 'D07', 'D08', 'D09', 'D010', 'D011', 'D012', 'D013', 'D014',
+        'D103', 'D105', 'D106', 'D107', 'D108', 'D109', 'D110', 'D112', 'D113', 'D114'
+      ];
+
+      function getRandomRoom() {
+        return ROOMS[Math.floor(Math.random() * ROOMS.length)];
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const tutorId = params.get('id');
+      const tutor = MOCK_TUTORS.find(t => t.id === tutorId);
+      const container = document.getElementById('profile-container');
+      const successModal = document.getElementById('success-modal');
+      const modalContent = document.getElementById('modal-content');
+      const closeModal = document.getElementById('close-modal');
+
+      if (!tutor) {
+        container.innerHTML = `
+          <div class="text-center py-20 flex flex-col items-center">
+            <div class="bg-slate-100 p-6 rounded-full mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Tutor not found</h2>
+            <p class="text-slate-500 mb-8 max-w-md">The tutor profile you're looking for doesn't exist or has been moved.</p>
+            <a href="/tutors.html" class="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 no-underline">Back to search</a>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="lg:col-span-2 space-y-12">
+              <nav class="flex items-center gap-2 text-[10px] text-slate-300 font-black uppercase tracking-[0.2em] mb-8">
+                <a href="/index.html" class="hover:text-purple-600 transition-colors">Home</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <a href="/tutors.html" class="hover:text-purple-600 transition-colors">Tutors</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span class="text-slate-500">${tutor.name}</span>
+              </nav>
+
+              <div class="bg-white rounded-[3rem] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-slate-50 flex flex-col md:flex-row gap-12 items-center md:items-start relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-bl-[8rem] -z-0 opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
+                <div class="relative z-10 shrink-0">
+                  <div class="relative">
+                    <img src="${tutor.photo}" alt="${tutor.name}" class="w-52 h-52 rounded-[2.5rem] object-cover shadow-2xl border-4 border-white transform group-hover:rotate-2 transition-transform duration-500" referrerPolicy="no-referrer">
+                    <div class="absolute -bottom-4 -right-4 bg-green-500 border-[6px] border-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl">
+                      <div class="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center md:text-left flex-1 relative z-10">
+                  <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+                    <div class="flex flex-col gap-2">
+                      <h2 class="text-5xl font-black text-slate-900 tracking-tighter italic">${tutor.name}</h2>
+                      <div class="flex items-center gap-3 justify-center md:justify-start">
+                        <span class="text-purple-600 font-extrabold text-xl italic">${tutor.subject}</span>
+                        <span class="px-3 py-1 bg-purple-50 text-purple-600 rounded-xl text-[10px] font-black border border-purple-100 uppercase tracking-widest">${COURSES.find(c => c.name === tutor.subject)?.creditHours || 3} CH</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-3 self-center md:self-auto">
+                      <button id="share-btn" class="p-4 rounded-2xl bg-slate-50 text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-all active:scale-95" title="Copy Profile Link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                      </button>
+                      <button id="message-btn" class="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 text-white font-black hover:bg-slate-800 transition-all uppercase tracking-widest text-[10px] active:scale-95 shadow-lg shadow-slate-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Direct Msg
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center gap-2 text-slate-400 mb-8 justify-center md:justify-start font-black uppercase tracking-[0.2em] text-[10px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    <span>${tutor.level} Degree</span>
+                  </div>
+
+                  <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <span class="px-5 py-2 bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-amber-100/50 flex items-center gap-2">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                       ${tutor.rating} Score
+                    </span>
+                    <span class="px-5 py-2 bg-purple-50 text-purple-700 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-purple-100/50">Verified UTAS</span>
+                    <span class="px-5 py-2 bg-indigo-50 text-indigo-700 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-indigo-100/50">Elite Tutor</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stats Row -->
+              <div class="grid grid-cols-3 gap-6">
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.02)] border border-slate-50 text-center group hover:bg-slate-900 transition-all duration-500">
+                  <p class="text-4xl font-black text-slate-900 mb-2 tracking-tighter group-hover:text-white transition-colors uppercase">150+</p>
+                  <p class="text-[9px] text-slate-300 font-black uppercase tracking-[0.2em] group-hover:text-slate-500 transition-colors">Hours Taught</p>
+                </div>
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.02)] border border-slate-50 text-center group hover:bg-purple-600 transition-all duration-500">
+                  <p class="text-4xl font-black text-slate-900 mb-2 tracking-tighter group-hover:text-white transition-colors uppercase">45</p>
+                  <p class="text-[9px] text-slate-300 font-black uppercase tracking-[0.2em] group-hover:text-purple-200 transition-colors">Students Helped</p>
+                </div>
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.02)] border border-slate-50 text-center group hover:bg-indigo-600 transition-all duration-500">
+                  <p class="text-4xl font-black text-slate-900 mb-2 tracking-tighter group-hover:text-white transition-colors uppercase">100%</p>
+                  <p class="text-[9px] text-slate-300 font-black uppercase tracking-[0.2em] group-hover:text-indigo-200 transition-colors">Satisfaction</p>
+                </div>
+              </div>
+
+              <section class="bg-white rounded-[3rem] p-12 shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-slate-50 relative overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-slate-50 rounded-full opacity-50"></div>
+                <div class="flex items-center gap-5 mb-10">
+                  <div class="bg-purple-100 p-3 rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
+                  <h3 class="text-3xl font-black text-slate-900 tracking-tighter italic">About the <span class="text-purple-600">Specialist</span></h3>
+                </div>
+                <div class="prose prose-slate max-w-none">
+                  <p class="text-slate-500 leading-relaxed text-lg mb-8 font-medium italic">"${tutor.about}"</p>
+                  <h4 class="text-slate-900 font-black text-xl mb-6 tracking-tight flex items-center gap-3">
+                    <span class="w-8 h-1 bg-purple-600 rounded-full"></span>
+                    Teaching Philosophy
+                  </h4>
+                  <p class="text-slate-500 leading-relaxed text-lg font-medium">${tutor.teachingPhilosophy}</p>
+                </div>
+              </section>
+
+              <section class="bg-white rounded-[3rem] p-12 shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-slate-50">
+                <div class="flex items-center gap-5 mb-10">
+                  <div class="bg-indigo-50 p-3 rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  </div>
+                  <h3 class="text-3xl font-black text-slate-900 tracking-tighter italic">Key <span class="text-indigo-600">Achievements</span></h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${tutor.achievements.map(achievement => `
+                    <div class="flex items-center gap-4 bg-slate-50/50 p-5 rounded-2xl border border-slate-100 group hover:border-indigo-200 hover:bg-white transition-all duration-300">
+                      <div class="bg-white p-2.5 rounded-xl shadow-sm group-hover:scale-110 group-hover:shadow-indigo-100 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                      </div>
+                      <span class="text-slate-600 font-bold text-sm tracking-tight">${achievement}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </section>
+
+              <section class="bg-white rounded-[3rem] p-12 shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-slate-50">
+                <div class="flex items-center justify-between mb-12">
+                  <div class="flex items-center gap-5">
+                    <div class="bg-amber-100 p-3 rounded-2xl">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900 tracking-tighter italic">Vocal <span class="text-amber-600">Reviews</span></h3>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-4xl font-black text-slate-900 tracking-tighter mb-1">${tutor.rating}</p>
+                    <p class="text-[9px] text-slate-300 font-black uppercase tracking-[0.2em]">Overall Rating</p>
+                  </div>
+                </div>
+
+                <!-- Reviews Summary Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
+                  <div class="flex flex-col justify-center items-center md:items-start">
+                    <div class="text-6xl font-black text-slate-900 mb-4 italic tracking-tighter">${tutor.rating}</div>
+                    <div class="flex items-center gap-1.5 mb-4">
+                      ${Array(5).fill(0).map((_, i) => `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="${i < Math.floor(tutor.rating) ? '#f59e0b' : 'none'}" stroke="${i < Math.floor(tutor.rating) ? '#f59e0b' : '#cbd5e1'}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      `).join('')}
+                    </div>
+                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Based on ${tutor.comments.length} verified sessions</p>
+                  </div>
+                  <div class="flex flex-col justify-center gap-3">
+                    ${[5, 4, 3, 2, 1].map(stars => {
+                      const count = tutor.comments.filter(c => c.rating === stars).length;
+                      const percentage = tutor.comments.length > 0 ? (count / tutor.comments.length) * 100 : 0;
+                      return `
+                        <div class="flex items-center gap-5">
+                          <span class="text-[10px] font-black text-slate-400 w-4">${stars}★</span>
+                          <div class="flex-1 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-amber-400 rounded-full" style="width: ${percentage}%"></div>
+                          </div>
+                          <span class="text-[9px] font-black text-slate-300 w-8">${Math.round(percentage)}%</span>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+
+                <div class="space-y-12">
+                  ${tutor.comments.map(comment => `
+                    <div class="relative pl-12 border-l-2 border-slate-100 py-2 group hover:border-purple-200 transition-colors duration-500">
+                      <div class="absolute -left-3 top-0 w-6 h-6 bg-white border-2 border-slate-100 rounded-full group-hover:border-purple-600 transition-colors flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 bg-slate-200 group-hover:bg-purple-600 rounded-full transition-colors"></div>
+                      </div>
+                      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+                        <div class="flex items-center gap-4">
+                          <div class="w-12 h-12 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center text-slate-500 font-black text-xl italic shadow-sm group-hover:from-purple-50 group-hover:to-indigo-50 group-hover:text-purple-600 transition-all">
+                            ${comment.studentName.split(' ')[0].charAt(0)}${comment.studentName.split(' ').length > 1 ? comment.studentName.split(' ')[1].charAt(0) : ''}
+                          </div>
+                          <div>
+                            <h4 class="font-black text-slate-900 tracking-tight group-hover:text-purple-600 transition-colors">${comment.studentName}</h4>
+                            <div class="flex items-center gap-1">
+                              ${Array(5).fill(0).map((_, i) => `
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="${i < comment.rating ? '#f59e0b' : 'none'}" stroke="${i < comment.rating ? '#f59e0b' : '#cbd5e1'}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                              `).join('')}
+                            </div>
+                          </div>
+                        </div>
+                        <span class="text-[10px] text-slate-300 font-black uppercase tracking-widest">${new Date(comment.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                      </div>
+                      <p class="text-slate-500 text-lg leading-relaxed font-medium italic group-hover:text-slate-700 transition-colors">
+                        "${comment.text}"
+                      </p>
+                    </div>
+                  `).join('')}
+                </div>
+              </section>
+
+              <!-- Similar Tutors -->
+              <section class="bg-white rounded-[3rem] p-12 shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-slate-50">
+                <div class="flex items-center justify-between mb-10">
+                  <div class="flex items-center gap-5">
+                    <div class="bg-blue-50 p-3 rounded-2xl">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900 tracking-tighter italic">Subject <span class="text-blue-600">Peers</span></h3>
+                  </div>
+                  <a href="/tutors.html?subject=${encodeURIComponent(tutor.subject)}" class="text-[10px] text-blue-600 font-black uppercase tracking-widest hover:underline">View Loop</a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  ${MOCK_TUTORS.filter(t => t.role === 'Tutor' && t.subject === tutor.subject && t.id !== tutor.id).slice(0, 2).map(similar => `
+                    <a href="/tutor-profile.html?id=${similar.id}" class="flex items-center gap-5 p-6 rounded-[2rem] border border-slate-50 hover:border-blue-100 hover:bg-blue-50/50 transition-all duration-300 no-underline group shadow-sm">
+                      <img src="${similar.photo}" alt="${similar.name}" class="w-20 h-20 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform" referrerPolicy="no-referrer">
+                      <div>
+                        <h4 class="font-black text-slate-900 group-hover:text-blue-600 transition-colors tracking-tight italic">${similar.name}</h4>
+                        <div class="flex items-center gap-1.5 mb-2 mt-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                          <span class="text-[10px] font-black text-slate-500">${similar.rating}</span>
+                        </div>
+                        <p class="text-[9px] text-slate-400 font-black uppercase tracking-widest">${similar.level}</p>
+                      </div>
+                    </a>
+                  `).join('')}
+                </div>
+              </section>
+            </div>
+
+            <div class="lg:col-span-1">
+              <div class="sticky top-24 space-y-8">
+                <div class="bg-white rounded-[3rem] p-10 shadow-[0_30px_60px_rgba(0,0,0,0.06)] border border-slate-50 relative overflow-hidden group">
+                  <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600"></div>
+                  <div class="mb-10">
+                    <h3 class="text-3xl font-black text-slate-900 tracking-tighter italic mb-2">Book <span class="text-purple-600">Spot</span></h3>
+                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Tailored study experiences</p>
+                  </div>
+                  
+                  <div class="space-y-8">
+                    <div>
+                      <label class="block text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-3">Academic Identity</label>
+                      <div class="relative">
+                        <input type="text" id="student-name" placeholder="Full Name" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-600 outline-none transition-all font-bold text-slate-700 placeholder:text-slate-300">
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-200">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4">Investment Plan</label>
+                      <div class="grid grid-cols-2 gap-3" id="pricing-options">
+                        <button class="pricing-card p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-left transition-all group/card hover:border-purple-200" data-price="${tutor.pricing.hourly}" data-plan="Hourly Session">
+                          <div class="flex flex-col mb-1">
+                            <span class="font-black text-slate-900 tracking-tight text-xs">Hourly Session</span>
+                            <span class="text-purple-600 font-black text-base italic">${tutor.pricing.hourly.toFixed(3)} OMR</span>
+                          </div>
+                          <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Pay per hour</p>
+                        </button>
+                        <button class="pricing-card p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-left transition-all group/card hover:border-purple-200" data-price="${tutor.pricing.monthly}" data-plan="Monthly Package">
+                          <div class="flex flex-col mb-1">
+                            <span class="font-black text-slate-900 tracking-tight text-xs">Monthly Package</span>
+                            <span class="text-purple-600 font-black text-base italic">${tutor.pricing.monthly.toFixed(3)} OMR</span>
+                          </div>
+                          <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Full month support</p>
+                        </button>
+                        <button class="pricing-card p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-left transition-all group/card hover:border-purple-200" data-price="${tutor.pricing.semester}" data-plan="Semester Package">
+                          <div class="flex flex-col mb-1">
+                            <span class="font-black text-slate-900 tracking-tight text-xs">Semester Package</span>
+                            <span class="text-purple-600 font-black text-base italic">${tutor.pricing.semester.toFixed(3)} OMR</span>
+                          </div>
+                          <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Full term success</p>
+                        </button>
+                        <button class="pricing-card p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-left transition-all group/card hover:border-purple-200" data-price="${tutor.pricing.midterm}" data-plan="Midterm Preparation">
+                          <div class="flex flex-col mb-1">
+                            <span class="font-black text-slate-900 tracking-tight text-xs">Midterm Prep</span>
+                            <span class="text-purple-600 font-black text-base italic">${tutor.pricing.midterm.toFixed(3)} OMR</span>
+                          </div>
+                          <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Exam readiness</p>
+                        </button>
+                        <button class="pricing-card col-span-2 p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-left transition-all group/card hover:border-purple-200" data-price="${tutor.pricing.final}" data-plan="Final Exam Preparation">
+                          <div class="flex flex-col mb-1">
+                            <span class="font-black text-slate-900 tracking-tight text-xs">Final Exam Prep</span>
+                            <span class="text-purple-600 font-black text-base italic">${tutor.pricing.final.toFixed(3)} OMR</span>
+                          </div>
+                          <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-tight">Last single session push</p>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Step 1: Modality -->
+                    <div>
+                      <label class="block text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4">Phase 1: Modality</label>
+                      <div class="grid ${tutor.teachingModes.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-3">
+                        ${tutor.teachingModes.includes('Online') ? `
+                          <button type="button" class="mode-btn p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-center hover:border-purple-200 transition-all font-black text-slate-500 text-[10px] uppercase tracking-[0.2em]" data-mode="online">Online</button>
+                        ` : ''}
+                        ${tutor.teachingModes.includes('Face-to-Face') ? `
+                          <button type="button" class="mode-btn p-5 rounded-2xl border-2 border-slate-50 bg-slate-50 text-center hover:border-purple-200 transition-all font-black text-slate-500 text-[10px] uppercase tracking-[0.2em]" data-mode="f2f">Face-to-Face</button>
+                        ` : ''}
+                      </div>
+                    </div>
+
+                    <!-- Step 2: Temporal Selection -->
+                    <div id="day-selection" class="hidden">
+                      <label class="block text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4">Phase 2: Temporal</label>
+                      <div class="grid grid-cols-3 gap-2">
+                        ${['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'WKD'].map(day => `
+                          <button type="button" class="day-btn p-3 rounded-xl bg-slate-50 text-[9px] font-black text-slate-400 hover:bg-purple-50 hover:text-purple-600 transition-all uppercase tracking-widest" data-day="${day === 'WKD' ? 'Weekend' : day}">${day}</button>
+                        `).join('')}
+                      </div>
+                    </div>
+
+                    <!-- Step 3: Venue & Slot -->
+                    <div id="time-location-selection" class="hidden space-y-6">
+                      <label class="block text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-2">Phase 3: Venue & Slot</label>
+                      
+                      <!-- Online Venue -->
+                      <div id="online-slots" class="hidden">
+                        <div class="bg-[#6264A7]/5 p-5 rounded-[2rem] border border-[#6264A7]/20 flex gap-4 mb-6">
+                          <div class="bg-[#6264A7] p-3 rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-[#6264A7]/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <rect x="9" y="6" width="12" height="12" rx="1" fill="white" fill-opacity="0.2"/>
+                              <path d="M9 12V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-6z" fill="white" fill-opacity="0.4"/>
+                              <path d="M5 8h2" stroke="white" stroke-width="2"/>
+                              <path d="M6 10v6" stroke="white" stroke-width="2"/>
+                              <circle cx="15" cy="10" r="2" fill="white"/>
+                              <path d="M11 18c0-2 2-3 4-3s4 1 4 3" stroke="white" stroke-width="2"/>
+                            </svg>
+                          </div>
+                          <div>
+                            <p class="text-[9px] text-[#6264A7] font-black uppercase tracking-[0.2em] mb-1">Online Venue</p>
+                            <p class="text-[10px] text-slate-500 font-bold leading-tight">Sessions will be conducted via Microsoft Teams.</p>
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                          ${['9:00 AM', '11:00 AM', '2:00 PM', '4:00 PM'].map(time => `
+                            <button type="button" class="time-slot-btn p-4 rounded-xl bg-slate-50 text-[10px] font-black text-slate-500 hover:bg-purple-600 hover:text-white transition-all uppercase tracking-widest">${time}</button>
+                          `).join('')}
+                        </div>
+                      </div>
+
+                      <!-- Face-to-Face Tuesday -->
+                      <div id="f2f-tuesday" class="hidden space-y-4">
+                        <div class="bg-purple-50 p-5 rounded-[2rem] border border-purple-100 group">
+                          <div class="flex items-center gap-3 mb-3">
+                             <div class="bg-white p-2 rounded-xl shadow-sm">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                             </div>
+                             <p class="text-[9px] font-black text-purple-400 uppercase tracking-[0.2em]">D Building Session</p>
+                          </div>
+                          <p class="font-black text-slate-900 italic tracking-tight leading-tight mb-4 text-xs">On Tuesdays, sessions are assigned to specific D Building classrooms.</p>
+                          
+                          <div class="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-purple-100/50 space-y-3">
+                            <div class="flex items-center justify-between">
+                              <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Location</span>
+                              <span class="text-xs font-black text-slate-900 uppercase">D Building</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                              <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Assigned Room</span>
+                              <span class="text-xs font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-lg" id="tuesday-room-display">-</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                              <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Time Slot</span>
+                              <span class="text-xs font-black text-slate-900 italic">12:00 PM – 2:00 PM</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Face-to-Face Other -->
+                      <div id="f2f-other" class="hidden space-y-4">
+                        <div class="bg-slate-50 p-5 rounded-[2rem] border border-slate-100">
+                          <div class="flex items-center gap-3 mb-2">
+                             <div class="bg-white p-2 rounded-xl shadow-sm">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+                             </div>
+                             <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em]">Library Session</p>
+                          </div>
+                          <p class="font-black text-slate-900 italic tracking-tight leading-tight">Face-to-face sessions are held in the college library from 8:00 AM to 4:00 PM.</p>
+                        </div>
+                        <div>
+                          <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-2 px-1">Arrival Time</p>
+                          <input type="time" id="f2f-time-picker" min="08:00" max="16:00" value="09:00" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-600 outline-none transition-all font-black text-slate-700">
+                        </div>
+                      </div>
+
+                      <!-- Face-to-Face Weekend Fail -->
+                      <div id="f2f-weekend-error" class="hidden">
+                        <div class="bg-red-50 p-6 rounded-[2rem] border border-red-100 flex gap-4">
+                          <div class="bg-white p-2 rounded-xl shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                          </div>
+                          <p class="text-[10px] text-red-800 font-bold leading-relaxed uppercase tracking-wider">Campus access restricted on weekends. Select online modality instead.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] mb-3">Academic Objectives</label>
+                      <textarea id="learning-goals" rows="3" placeholder="Define your study goals..." class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-600 outline-none transition-all resize-none font-bold text-slate-700 placeholder:text-slate-300 text-sm"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="mt-10 pt-10 border-t border-slate-50">
+                    <div class="mb-8 p-6 bg-slate-50 rounded-[2rem] border border-slate-100 hidden" id="booking-summary-box">
+                      <p class="text-[9px] text-slate-300 font-black uppercase tracking-[0.2em] mb-4">Booking Summary</p>
+                      <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Tutor</span>
+                          <span class="text-xs font-black text-slate-900 uppercase tracking-tight">${tutor.name}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Package</span>
+                          <span class="text-xs font-black text-slate-900 uppercase tracking-tight" id="summary-package">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Package Price</span>
+                          <span class="text-xs font-black text-slate-900 uppercase tracking-tight" id="summary-price">0 OMR</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-3">
+                          <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Application Fee</span>
+                          <span class="text-xs font-black text-slate-900 uppercase tracking-tight">0.500 OMR</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-8">
+                       <div>
+                         <p class="text-[9px] text-slate-300 font-black uppercase tracking-[0.2em] mb-1">Final Investment</p>
+                         <span id="total-price-display" class="font-black text-slate-900 text-4xl tracking-tighter italic">0 <span class="text-sm font-black uppercase text-slate-300 tracking-widest not-italic">OMR</span></span>
+                       </div>
+                       <div class="bg-purple-100 p-4 rounded-full w-12 h-12 flex items-center justify-center shadow-lg shadow-purple-200/50">
+                          <span class="text-purple-600 font-black text-[10px] tracking-tighter">OMR</span>
+                       </div>
+                    </div>
+                    
+                    <div id="booking-error" class="hidden bg-red-50 border border-red-100 text-red-600 p-5 rounded-2xl text-[10px] font-black uppercase tracking-widest mb-6 text-center animate-bounce"></div>
+
+                    <button id="book-btn" class="w-full py-6 bg-slate-900 text-white font-black rounded-[2rem] hover:bg-purple-600 transition-all shadow-2xl active:scale-95 uppercase tracking-[0.2em] text-[10px]">Verify & Secure</button>
+                    
+                    <p class="text-center text-[8px] text-slate-200 font-black uppercase tracking-[0.3em] mt-8">Encrypted via PeerTutor Security Loop</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Handle Pricing Selection
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        const totalPriceDisplay = document.getElementById('total-price-display');
+        const summaryBox = document.getElementById('booking-summary-box');
+        const summaryPackage = document.getElementById('summary-package');
+        const summaryPrice = document.getElementById('summary-price');
+        
+        let selectedPackagePrice = 0;
+
+        pricingCards.forEach(card => {
+          card.addEventListener('click', () => {
+            pricingCards.forEach(c => {
+              c.classList.remove('border-purple-600', 'bg-purple-50');
+              c.classList.add('border-slate-50', 'bg-slate-50');
+            });
+            card.classList.remove('border-slate-50', 'bg-slate-50');
+            card.classList.add('border-purple-600', 'bg-purple-50');
+            
+            selectedPackagePrice = parseFloat(card.getAttribute('data-price'));
+            const packageName = card.getAttribute('data-plan');
+            const totalWithFee = selectedPackagePrice + 0.500;
+
+            summaryBox.classList.remove('hidden');
+            summaryPackage.textContent = packageName;
+            summaryPrice.textContent = `${selectedPackagePrice.toFixed(3)} OMR`;
+            totalPriceDisplay.innerHTML = `${totalWithFee.toFixed(3)} <span class="text-sm font-black uppercase text-slate-300 tracking-widest not-italic">OMR</span>`;
+          });
+        });
+
+        // Booking State
+        let selectedMode = null;
+        let selectedDay = null;
+        let selectedTime = null;
+        let assignedTuesdayRoom = null;
+
+        const daySelection = document.getElementById('day-selection');
+        const timeLocationSelection = document.getElementById('time-location-selection');
+        const onlineSlots = document.getElementById('online-slots');
+        const f2fTuesday = document.getElementById('f2f-tuesday');
+        const f2fOther = document.getElementById('f2f-other');
+        const f2fWeekendError = document.getElementById('f2f-weekend-error');
+
+        // Handle Mode Selection
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        modeBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            modeBtns.forEach(b => {
+              b.classList.remove('ring-4', 'ring-purple-600/10', 'border-purple-600', 'bg-purple-50');
+              b.classList.add('border-slate-50', 'bg-slate-50');
+            });
+            btn.classList.remove('border-slate-50', 'bg-slate-50');
+            btn.classList.add('ring-4', 'ring-purple-600/10', 'border-purple-600', 'bg-purple-50');
+            selectedMode = btn.getAttribute('data-mode');
+            
+            daySelection.classList.remove('hidden');
+            updateStep3();
+          });
+        });
+
+        // Handle Day Selection
+        const dayBtns = document.querySelectorAll('.day-btn');
+        dayBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            dayBtns.forEach(b => {
+              b.classList.remove('bg-purple-600', 'text-white', 'border-purple-600');
+              b.classList.add('bg-slate-50', 'text-slate-400');
+            });
+            btn.classList.remove('bg-slate-50', 'text-slate-400');
+            btn.classList.add('bg-purple-600', 'text-white', 'border-purple-600');
+            selectedDay = btn.getAttribute('data-day');
+            
+            timeLocationSelection.classList.remove('hidden');
+            updateStep3();
+          });
+        });
+
+        // Handle Online Time Slot Selection
+        const timeSlotBtns = document.querySelectorAll('.time-slot-btn');
+        timeSlotBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            timeSlotBtns.forEach(b => {
+              b.classList.remove('bg-purple-600', 'text-white', 'border-purple-600');
+              b.classList.add('bg-slate-50', 'text-slate-500');
+            });
+            btn.classList.remove('bg-slate-50', 'text-slate-500');
+            btn.classList.add('bg-purple-600', 'text-white', 'border-purple-600');
+            selectedTime = btn.textContent;
+          });
+        });
+
+        function updateStep3() {
+          // Reset Step 3
+          onlineSlots.classList.add('hidden');
+          f2fTuesday.classList.add('hidden');
+          f2fOther.classList.add('hidden');
+          f2fWeekendError.classList.add('hidden');
+          selectedTime = null;
+
+          if (!selectedMode || !selectedDay) return;
+
+          if (selectedMode === 'online') {
+            onlineSlots.classList.remove('hidden');
+          } else if (selectedMode === 'f2f') {
+            if (selectedDay === 'Weekend') {
+              f2fWeekendError.classList.remove('hidden');
+            } else if (selectedDay === 'Tue') {
+              f2fTuesday.classList.remove('hidden');
+              selectedTime = '12:00 PM – 2:00 PM';
+              
+              // Only assign a new room if we don't have one for this selection context
+              if (!assignedTuesdayRoom) {
+                assignedTuesdayRoom = getRandomRoom();
+              }
+              document.getElementById('tuesday-room-display').textContent = assignedTuesdayRoom;
+            } else {
+              f2fOther.classList.remove('hidden');
+              assignedTuesdayRoom = null; // Clear it for non-Tuesday
+            }
+          }
+        }
+
+        // Handle Share Button
+        const shareBtn = document.getElementById('share-btn');
+        const shareModal = document.getElementById('share-modal');
+        const shareModalContent = document.getElementById('share-modal-content');
+        const closeShare = document.getElementById('close-share');
+        const shareUrlText = document.getElementById('share-url-text');
+        
+        const shareWhatsapp = document.getElementById('share-whatsapp');
+        const shareCopy = document.getElementById('share-copy');
+        const shareInstagram = document.getElementById('share-instagram');
+        const shareTiktok = document.getElementById('share-tiktok');
+
+        if (shareBtn) {
+          shareBtn.addEventListener('click', async () => {
+            const shareTitle = `Study with ${tutor.name}`;
+            const shareText = `Check out ${tutor.name}, an expert tutor for ${tutor.subject} on PeerTutor!`;
+            const shareUrl = window.location.href;
+
+            if (navigator.share) {
+              try {
+                await navigator.share({
+                  title: shareTitle,
+                  text: shareText,
+                  url: shareUrl
+                });
+              } catch (err) {
+                if (err.name !== 'AbortError') {
+                  openShareModal(shareUrl, shareText);
+                }
+              }
+            } else {
+              openShareModal(shareUrl, shareText);
+            }
+          });
+        }
+
+        function openShareModal(url, text) {
+          shareUrlText.textContent = url;
+          shareModal.classList.remove('hidden');
+          shareModal.classList.add('flex');
+          setTimeout(() => {
+            shareModalContent.classList.remove('scale-95', 'opacity-0');
+            shareModalContent.classList.add('scale-100', 'opacity-100');
+          }, 10);
+        }
+
+        closeShare.addEventListener('click', () => {
+          shareModalContent.classList.add('scale-95', 'opacity-0');
+          shareModalContent.classList.remove('scale-100', 'opacity-100');
+          setTimeout(() => {
+            shareModal.classList.add('hidden');
+            shareModal.classList.remove('flex');
+          }, 300);
+        });
+
+        shareWhatsapp.addEventListener('click', () => {
+          const text = encodeURIComponent(`Study with ${tutor.name}!\n\nCheck out ${tutor.name}, an expert tutor for ${tutor.subject} on PeerTutor!\n\n${window.location.href}`);
+          window.open(`https://wa.me/?text=${text}`, '_blank');
+        });
+
+        shareCopy.addEventListener('click', () => {
+          navigator.clipboard.writeText(window.location.href);
+          const originalText = shareCopy.querySelector('span').textContent;
+          shareCopy.querySelector('span').textContent = 'COPIED!';
+          shareCopy.querySelector('span').classList.add('text-green-600');
+          setTimeout(() => {
+            shareCopy.querySelector('span').textContent = originalText;
+            shareCopy.querySelector('span').classList.remove('text-green-600');
+          }, 2000);
+        });
+
+        shareInstagram.addEventListener('click', () => {
+          // Instagram doesn't have a direct share URL for web, so we copy link and notify
+          navigator.clipboard.writeText(window.location.href);
+          alert('Profile link copied! You can now paste it in your Instagram story or bio.');
+        });
+
+        shareTiktok.addEventListener('click', () => {
+          // TikTok doesn't have a direct share URL for web, so we copy link and notify
+          navigator.clipboard.writeText(window.location.href);
+          alert('Profile link copied! You can now share it on TikTok.');
+        });
+
+        // Handle Message Button
+        const messageBtn = document.getElementById('message-btn');
+        const chatModal = document.getElementById('chat-modal');
+        const chatModalContent = document.getElementById('chat-modal-content');
+        const closeChat = document.getElementById('close-chat');
+        const chatTutorPhoto = document.getElementById('chat-tutor-photo');
+        const chatTutorName = document.getElementById('chat-tutor-name');
+        const chatWelcomeMsg = document.getElementById('chat-welcome-msg');
+        const chatInput = document.getElementById('chat-input');
+        const sendChat = document.getElementById('send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        if (messageBtn) {
+          messageBtn.addEventListener('click', () => {
+            chatTutorPhoto.src = tutor.photo;
+            chatTutorName.textContent = tutor.name;
+            chatWelcomeMsg.textContent = `Hello! I'm ${tutor.name}. How can I help you with ${tutor.subject} today?`;
+            
+            chatModal.classList.remove('hidden');
+            chatModal.classList.add('flex');
+            setTimeout(() => {
+              chatModalContent.classList.remove('scale-95', 'opacity-0');
+              chatModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+          });
+        }
+
+        closeChat.addEventListener('click', () => {
+          chatModalContent.classList.add('scale-95', 'opacity-0');
+          chatModalContent.classList.remove('scale-100', 'opacity-100');
+          setTimeout(() => {
+            chatModal.classList.add('hidden');
+            chatModal.classList.remove('flex');
+          }, 300);
+        });
+
+        function appendMessage(text, isUser = true) {
+          const msgDiv = document.createElement('div');
+          msgDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+          msgDiv.innerHTML = `
+            <div class="${isUser ? 'bg-blue-600 text-white' : 'bg-white text-slate-600'} p-4 rounded-2xl ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} shadow-sm border ${isUser ? 'border-blue-700' : 'border-slate-100'} max-w-[80%]">
+              <p class="text-sm">${text}</p>
+            </div>
+          `;
+          chatMessages.appendChild(msgDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendChat.addEventListener('click', () => {
+          const text = chatInput.value.trim();
+          if (text) {
+            appendMessage(text, true);
+            chatInput.value = '';
+            
+            // Mock auto-reply
+            setTimeout(() => {
+              appendMessage("Thanks for your message! I'll get back to you as soon as possible to discuss your learning goals.", false);
+            }, 1000);
+          }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') sendChat.click();
+        });
+
+        // Handle Payment Options Selection
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+        let selectedPaymentMethod = null;
+
+        paymentOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            paymentOptions.forEach(o => {
+              o.classList.remove('border-blue-600', 'bg-blue-50', 'ring-4', 'ring-blue-600/20');
+              o.classList.add('border-slate-100');
+              
+              const checkCircle = o.querySelector('.w-5');
+              const checkDot = o.querySelector('.w-2');
+              if (checkCircle) checkCircle.classList.remove('bg-blue-600', 'border-blue-600');
+              if (checkDot) checkDot.classList.add('opacity-0');
+            });
+
+            option.classList.remove('border-slate-100');
+            option.classList.add('border-blue-600', 'bg-blue-50');
+
+            const checkCircle = option.querySelector('.w-5');
+            const checkDot = option.querySelector('.w-2');
+            if (checkCircle) checkCircle.classList.add('bg-blue-600', 'border-blue-600');
+            if (checkDot) checkDot.classList.remove('opacity-0');
+            
+            selectedPaymentMethod = option.getAttribute('data-method');
+            confirmPaymentBtn.disabled = false;
+          });
+        });
+
+        const bookingModal = document.getElementById('booking-modal');
+        const paymentView = document.getElementById('payment-view');
+        const visaPaymentView = document.getElementById('visa-payment-view');
+        const successView = document.getElementById('success-view');
+        const cancelPayment = document.getElementById('cancel-payment');
+        const cancelVisa = document.getElementById('cancel-visa');
+        const cancelVisaBtn = document.getElementById('cancel-visa-btn');
+        const onlineReminder = document.getElementById('online-reminder');
+        const generalSuccessNote = document.getElementById('general-success-note');
+
+        const visaForm = document.getElementById('visa-form');
+        const visaAmountDisplay = document.getElementById('visa-amount-display');
+        const visaError = document.getElementById('visa-error');
+
+        function hideModal() {
+          paymentView.classList.add('scale-95', 'opacity-0');
+          visaPaymentView.classList.add('scale-95', 'opacity-0');
+          successView.classList.add('scale-95', 'opacity-0');
+          setTimeout(() => {
+            bookingModal.classList.add('hidden');
+            bookingModal.classList.remove('flex');
+          }, 300);
+        }
+
+        cancelPayment.addEventListener('click', hideModal);
+        cancelVisa.addEventListener('click', hideModal);
+        cancelVisaBtn.addEventListener('click', () => {
+          visaPaymentView.classList.add('scale-95', 'opacity-0');
+          setTimeout(() => {
+            visaPaymentView.classList.add('hidden');
+            paymentView.classList.remove('hidden');
+            setTimeout(() => {
+              paymentView.classList.remove('scale-95', 'opacity-0');
+              paymentView.classList.add('scale-100', 'opacity-100');
+            }, 10);
+          }, 300);
+        });
+
+        async function showSuccess() {
+          paymentView.classList.add('hidden');
+          visaPaymentView.classList.add('hidden');
+          successView.classList.remove('hidden');
+          
+          // Set summary fields
+          document.getElementById('success-tutor-name').textContent = tutor.name;
+          const finalTime = selectedMode === 'f2f' && selectedDay !== 'Tue' && selectedDay !== 'Weekend' 
+            ? document.getElementById('f2f-time-picker').value 
+            : selectedTime;
+          document.getElementById('success-date-time').textContent = `${selectedDay}, ${finalTime}`;
+
+          const successRoomContainer = document.getElementById('success-room-container');
+          const successRoomInfo = document.getElementById('success-room-info');
+
+          let venueInfo = '';
+          if (selectedMode === 'online') {
+            onlineReminder.classList.remove('hidden');
+            generalSuccessNote.classList.add('hidden');
+            successRoomContainer.classList.add('hidden');
+            venueInfo = 'MS Teams Online';
+          } else {
+            onlineReminder.classList.add('hidden');
+            generalSuccessNote.classList.remove('hidden');
+            successRoomContainer.classList.remove('hidden');
+            
+            if (selectedDay === 'Tue') {
+              const room = assignedTuesdayRoom || getRandomRoom();
+              successRoomInfo.textContent = `Room ${room}, D Building`;
+              venueInfo = `Room ${room}, D Building`;
+            } else {
+              successRoomInfo.textContent = `College Library`;
+              venueInfo = 'College Library';
+            }
+          }
+
+          // Formspree Integration
+          try {
+            const formData = new FormData();
+            formData.append('studentName', document.getElementById('student-name').value);
+            formData.append('tutorName', tutor.name);
+            formData.append('package', document.getElementById('summary-package').textContent);
+            formData.append('price', document.getElementById('summary-price').textContent);
+            formData.append('mode', selectedMode);
+            formData.append('day', selectedDay);
+            formData.append('time', finalTime);
+            formData.append('venue', venueInfo);
+            formData.append('learningGoals', document.getElementById('learning-goals').value);
+            formData.append('paymentMethod', selectedPaymentMethod);
+
+            await fetch('https://formspree.io/f/xqewrgdb', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+          } catch (err) {
+            console.error('Formspree booking error:', err);
+          }
+
+          setTimeout(() => {
+            successView.classList.remove('scale-95', 'opacity-0');
+            successView.classList.add('scale-100', 'opacity-100');
+          }, 10);
+        }
+
+        confirmPaymentBtn.addEventListener('click', () => {
+          if (selectedPaymentMethod === 'Visa / MasterCard') {
+            const totalPrice = selectedPackagePrice + 0.500;
+            visaAmountDisplay.textContent = `Amount to Pay: ${totalPrice.toFixed(3)} OMR`;
+            
+            paymentView.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+              paymentView.classList.add('hidden');
+              visaPaymentView.classList.remove('hidden');
+              setTimeout(() => {
+                visaPaymentView.classList.remove('scale-95', 'opacity-0');
+                visaPaymentView.classList.add('scale-100', 'opacity-100');
+              }, 10);
+            }, 300);
+            return;
+          }
+
+          confirmPaymentBtn.disabled = true;
+          confirmPaymentBtn.innerHTML = `
+            <svg class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          `;
+
+          setTimeout(() => {
+            showSuccess();
+          }, 1000);
+        });
+
+        // Visa Form Submission
+        visaForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const name = document.getElementById('visa-name').value;
+          const number = document.getElementById('visa-number').value;
+          const expiry = document.getElementById('visa-expiry').value;
+          const cvv = document.getElementById('visa-cvv').value;
+
+          visaError.classList.add('hidden');
+
+          if (!name || number.length !== 16 || !expiry || cvv.length !== 3) {
+            visaError.textContent = "Please fill all fields correctly (16 digit card, 3 digit CVV)";
+            visaError.classList.remove('hidden');
+            return;
+          }
+
+          const payBtn = document.getElementById('pay-now-btn');
+          payBtn.disabled = true;
+          payBtn.innerHTML = `
+            <svg class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          `;
+
+          setTimeout(() => {
+            showSuccess();
+            payBtn.disabled = false;
+            payBtn.textContent = "Pay Now";
+          }, 2000);
+        });
+
+        const bookingError = document.getElementById('booking-error');
+
+        // Booking logic
+        const bookBtn = document.getElementById('book-btn');
+        const studentNameInput = document.getElementById('student-name');
+        const f2fTimePicker = document.getElementById('f2f-time-picker');
+        const cashPaymentOption = document.getElementById('cash-payment-option');
+
+        bookBtn.addEventListener('click', () => {
+          const finalTime = selectedMode === 'f2f' && selectedDay !== 'Tue' && selectedDay !== 'Weekend' 
+            ? f2fTimePicker.value 
+            : selectedTime;
+
+          if (!studentNameInput.value || selectedPackagePrice === 0 || !selectedMode || !selectedDay || !finalTime) {
+            showError('Please complete all booking steps, including package selection.');
+            return;
+          }
+
+          if (selectedMode === 'f2f' && selectedDay === 'Weekend') {
+            showError('Face-to-face sessions are not available on weekends.');
+            return;
+          }
+
+          bookBtn.disabled = true;
+          const originalBtnContent = bookBtn.innerHTML;
+          bookBtn.innerHTML = `
+            <svg class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          `;
+
+          setTimeout(() => {
+            bookBtn.disabled = false;
+            bookBtn.innerHTML = originalBtnContent;
+            
+            // Show Payment View
+            bookingModal.classList.remove('hidden');
+            bookingModal.classList.add('flex');
+            paymentView.classList.remove('hidden');
+            successView.classList.add('hidden');
+            
+            // Payment Rules: Hide Cash for Online
+            if (selectedMode === 'online') {
+              cashPaymentOption.classList.add('hidden');
+            } else {
+              cashPaymentOption.classList.remove('hidden');
+            }
+
+            setTimeout(() => {
+              paymentView.classList.remove('scale-95', 'opacity-0');
+              paymentView.classList.add('scale-100', 'opacity-100');
+            }, 10);
+          }, 800);
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+          window.location.href = '/index.html';
+        });
+
+        function showError(msg) {
+          const bookingError = document.getElementById('booking-error');
+          if (bookingError) {
+            bookingError.innerText = msg;
+            bookingError.classList.remove('hidden');
+            setTimeout(() => bookingError.classList.add('hidden'), 5000);
+          }
+        }
+
+        // Apply dynamic styles for injected content
+        const style = document.createElement('style');
+        style.textContent = `
+          .mode-btn:hover, .day-btn:hover, .time-slot-btn:hover { border-color: #a855f7 !important; background-color: #f5f3ff !important; }
+          .mode-btn.active, .day-btn.active, .time-slot-btn.active { background-color: #9333ea !important; color: white !important; border-color: #9333ea !important; }
+          .pricing-card:hover { border-color: #d8b4fe !important; }
+          .pricing-card.selected { border-color: #9333ea !important; background-color: #f5f3ff !important; }
+        `;
+        document.head.appendChild(style);
+      }
+    </script>
+  </body>
+</html>

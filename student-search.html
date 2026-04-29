@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Tutors - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+  </head>
+  <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <a href="/index.html" class="flex items-center gap-2 no-underline group">
+        <div class="bg-gradient-to-br from-blue-500 to-indigo-500 p-1.5 rounded-lg group-hover:shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span class="text-xl font-black text-slate-900 tracking-tighter">PeerTutor <span class="text-blue-500 text-xs font-bold uppercase tracking-widest ml-1">Student</span></span>
+      </a>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/student-search.html" class="text-blue-600 font-black no-underline">Find Tutors</a>
+        <a href="/progress.html" class="text-slate-600 hover:text-green-600 font-bold no-underline transition-colors">My Progress</a>
+        <div class="flex items-center gap-3 pl-4 border-l border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 border border-blue-100 shadow-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow">
+      <!-- Hero Search Section -->
+      <div class="max-w-4xl mx-auto py-20 text-center relative">
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-purple-100/40 rounded-full blur-3xl -z-10 animate-pulse"></div>
+        <div class="space-y-4 mb-12">
+          <h2 class="text-6xl font-black text-slate-900 tracking-tighter leading-tight italic">
+            Find Your <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">Course</span>
+          </h2>
+          <p class="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+            Search for your course and connect with the best tutors
+          </p>
+        </div>
+
+        <div class="max-w-3xl mx-auto bg-white rounded-[3rem] shadow-[0_20px_60px_rgba(100,116,139,0.1)] border border-slate-100 overflow-hidden mb-16 p-4">
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-focus-within:text-purple-500 transition-colors"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <input
+              id="search-input"
+              type="text"
+              autocomplete="off"
+              placeholder="Search courses or tutors..."
+              class="w-full pl-16 pr-6 py-6 bg-slate-50/50 rounded-[2rem] border-2 border-transparent focus:border-purple-100 focus:bg-white transition-all outline-none font-black text-slate-800 placeholder:text-slate-300 text-lg"
+            />
+          </div>
+
+          <!-- Real-Time Search Results Dropdown -->
+          <div id="search-results-dropdown" class="mt-4 hidden border-t border-slate-50 max-h-[500px] overflow-y-auto">
+            <div id="search-results-list" class="divide-y divide-slate-50">
+              <!-- Dynamically populated -->
+            </div>
+            <div id="no-results" class="hidden p-12 text-center">
+              <p class="text-lg font-black text-slate-900 mb-1 italic">No results found</p>
+              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black">Try a different course code or name</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-3 gap-12 max-w-2xl mx-auto mb-20 bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-100/50 border border-slate-50">
+          <div class="text-center group">
+            <p class="text-4xl font-black text-slate-900 group-hover:text-purple-600 transition-colors">500+</p>
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-1">Peer Tutors</p>
+          </div>
+          <div class="text-center border-x border-slate-100 group">
+            <p class="text-4xl font-black text-slate-900 group-hover:text-purple-600 transition-colors">12k+</p>
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-1">Sessions</p>
+          </div>
+          <div class="text-center group">
+            <p class="text-4xl font-black text-slate-900 group-hover:text-purple-600 transition-colors">4.6 / 5</p>
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-1">Average Rating</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popular Subjects -->
+      <div class="mb-32">
+        <div class="flex items-end justify-between mb-10 pl-2">
+          <div>
+            <h3 class="text-4xl font-black text-slate-900 tracking-tight">Active Courses</h3>
+            <p class="text-slate-400 text-sm font-medium">Explore by your academic interests</p>
+          </div>
+          <a href="#" class="px-6 py-2 bg-white rounded-xl border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-purple-600 hover:border-purple-100 transition-all shadow-sm">View All</a>
+        </div>
+        <div id="subjects-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8 px-2">
+          <!-- Subjects will be injected here -->
+        </div>
+      </div>
+
+      <!-- How it Works -->
+      <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-[4rem] p-20 shadow-2xl shadow-slate-200 mb-32 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/10 rounded-full -ml-20 -mb-20 blur-3xl"></div>
+        
+        <h3 class="text-4xl font-black text-white text-center mb-20 tracking-tighter">Your Path to <span class="text-purple-400 italic">Excellence</span></h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-20 relative z-10">
+          <div class="text-center group">
+            <div class="bg-white/5 w-24 h-24 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl backdrop-blur-md group-hover:bg-purple-600 group-hover:scale-110 transition-all duration-500 border border-white/5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <h4 class="text-2xl font-black text-white mb-4">Pick a Peer</h4>
+            <p class="text-slate-400 font-medium leading-relaxed">Search for top students who have excelled in your specific class before.</p>
+          </div>
+          <div class="text-center group">
+            <div class="bg-white/5 w-24 h-24 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl backdrop-blur-md group-hover:bg-indigo-600 group-hover:scale-110 transition-all duration-500 border border-white/5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h4 class="text-2xl font-black text-white mb-4">Study Strategy</h4>
+            <p class="text-slate-400 font-medium leading-relaxed">Choose local on-campus sessions or connect instantly online.</p>
+          </div>
+          <div class="text-center group">
+            <div class="bg-white/5 w-24 h-24 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl backdrop-blur-md group-hover:bg-blue-600 group-hover:scale-110 transition-all duration-500 border border-white/5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <h4 class="text-2xl font-black text-white mb-4">Master Topics</h4>
+            <p class="text-slate-400 font-medium leading-relaxed">Deepen your understanding and boost your official course grades.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Rated Tutors -->
+      <div class="mb-32">
+        <div class="flex items-end justify-between mb-12 pl-2">
+          <div>
+            <h3 class="text-4xl font-black text-slate-900 tracking-tight">Expert Tutors</h3>
+            <p class="text-slate-400 text-sm font-medium mt-1">High-performing peers with elite feedback</p>
+          </div>
+          <a href="/tutors.html" class="px-8 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-purple-600 transition-all shadow-lg shadow-slate-100">Browse All</a>
+        </div>
+        <div id="top-tutors-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12 px-2">
+          <!-- Top tutors will be injected here -->
+        </div>
+      </div>
+
+      <!-- Contact Admins Section -->
+      <div class="mb-32">
+        <div class="text-center mb-16">
+          <h3 class="text-4xl font-black text-slate-900 tracking-tight italic">Need Help? <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Contact Admins</span></h3>
+          <p class="text-slate-400 text-sm font-medium mt-2">Our team is here to support your learning journey</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+          <!-- Admin 1 -->
+          <div onclick="window.open('https://outlook.office.com/mail/deeplink/compose?to=1633s2255@utas.edu.om&subject=PeerTutor%20Support%20Request&body=Hello,%20Israa%20Al-Maqbali%0A%0AI%20need%20support%20with%20the%20PeerTutor%20platform.%20Could%20you%20please%20help%20me%20with%20my%20request?', '_blank')" class="flex items-center gap-5 p-6 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-100/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+            <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <p class="font-black text-slate-900 italic tracking-tight group-hover:text-blue-600 transition-colors flex items-center gap-2">
+                Israa Al-Maqbali <span class="text-sm not-italic opacity-0 group-hover:opacity-100 transition-opacity">📧</span>
+              </p>
+              <p class="text-[10px] font-bold text-slate-400 truncate tracking-widest uppercase group-hover:text-blue-500 group-hover:underline">1633s2255@utas.edu.om</p>
+            </div>
+          </div>
+
+          <!-- Admin 2 -->
+          <div onclick="window.open('https://outlook.office.com/mail/deeplink/compose?to=1633s2244@utas.edu.om&subject=PeerTutor%20Support%20Request&body=Hello,%20Saja%20Al-Sinani%0A%0AI%20need%20support%20with%20the%20PeerTutor%20platform.%20Could%20you%20please%20help%20me%20with%20my%20request?', '_blank')" class="flex items-center gap-5 p-6 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-100/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+            <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <p class="font-black text-slate-900 italic tracking-tight group-hover:text-indigo-600 transition-colors flex items-center gap-2">
+                Saja Al-Sinani <span class="text-sm not-italic opacity-0 group-hover:opacity-100 transition-opacity">📧</span>
+              </p>
+              <p class="text-[10px] font-bold text-slate-400 truncate tracking-widest uppercase group-hover:text-indigo-500 group-hover:underline">1633s2244@utas.edu.om</p>
+            </div>
+          </div>
+
+          <!-- Admin 3 -->
+          <div onclick="window.open('https://outlook.office.com/mail/deeplink/compose?to=1633s2298@utas.edu.om&subject=PeerTutor%20Support%20Request&body=Hello,%20Reem%20Al-Khamisi%0A%0AI%20need%20support%20with%20the%20PeerTutor%20platform.%20Could%20you%20please%20help%20me%20with%20my%20request?', '_blank')" class="flex items-center gap-5 p-6 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-100/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 transition-all duration-300 group cursor-pointer">
+            <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <p class="font-black text-slate-900 italic tracking-tight group-hover:text-purple-600 transition-colors flex items-center gap-2">
+                Reem Al-Khamisi <span class="text-sm not-italic opacity-0 group-hover:opacity-100 transition-opacity">📧</span>
+              </p>
+              <p class="text-[10px] font-bold text-slate-400 truncate tracking-widest uppercase group-hover:text-purple-500 group-hover:underline">1633s2298@utas.edu.om</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-50 py-16">
+      <div class="max-w-7xl mx-auto px-4 text-center text-slate-400 text-xs font-black uppercase tracking-[0.2em]">
+        © 2024 PeerTutor Platform. Elevating Student Success.
+      </div>
+    </footer>
+
+    <script type="module">
+      import { COURSES, MOCK_TUTORS } from '/src/data.ts';
+      
+      const searchInput = document.getElementById('search-input');
+      const resultsDropdown = document.getElementById('search-results-dropdown');
+      const resultsList = document.getElementById('search-results-list');
+      const noResults = document.getElementById('no-results');
+
+      // Unified Search Function
+      function handleSearch(e) {
+        const searchText = e.target.value.trim().toLowerCase();
+        
+        if (!searchText) {
+          resultsDropdown.classList.add('hidden');
+          return;
+        }
+
+        const normalizedSearch = searchText.replace(/\s*[—–-]\s*/g, ' - ');
+
+        // 1. Filter Courses
+        const matchedCourses = COURSES.filter(course => 
+          course.name.toLowerCase().includes(searchText) ||
+          course.name.replace(/\s*[—–-]\s*/g, ' - ').toLowerCase().includes(normalizedSearch) ||
+          course.keywords.some(k => k.toLowerCase().includes(searchText))
+        );
+
+        // 2. Filter Tutors
+        const matchedTutors = MOCK_TUTORS.filter(tutor => 
+          tutor.role === 'Tutor' && (
+            tutor.name.toLowerCase().includes(searchText) ||
+            tutor.subject.toLowerCase().includes(searchText) ||
+            tutor.subject.replace(/\s*[—–-]\s*/g, ' - ').toLowerCase().includes(normalizedSearch)
+          )
+        );
+
+        // Combine and limit to 8 items (max)
+        const totalResults = [
+          ...matchedCourses.map(c => ({ ...c, type: 'course' })),
+          ...matchedTutors.map(t => ({ ...t, type: 'tutor' }))
+        ].slice(0, 8);
+
+        // Render Results
+        if (totalResults.length > 0) {
+          noResults.classList.add('hidden');
+          resultsList.innerHTML = totalResults.map(item => {
+            if (item.type === 'course') {
+              // Course Result Format: Code + Name
+              const parts = item.name.split(/[—–-]/);
+              const code = parts[0]?.trim() || "";
+              const name = parts.slice(1).join(' — ').trim() || parts[0];
+              
+              return `
+                <div onclick="window.location.href='/tutors.html?subject=${encodeURIComponent(item.name)}'" 
+                     class="p-6 hover:bg-slate-50 cursor-pointer flex items-center justify-between group transition-all">
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-all border border-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+                    </div>
+                    <div>
+                      <span class="text-sm font-black text-slate-900 block group-hover:text-purple-600 transition-colors uppercase tracking-tight italic">${code} — ${name}</span>
+                      <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest italic">Course Guide Available</span>
+                    </div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-200 group-hover:text-purple-400 transition-all group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+              `;
+            } else {
+              // Tutor Result Format: Tutor name + course + price
+              const subjectPart = item.subject.split(/[—–-]/)[1]?.trim() || item.subject;
+              return `
+                <div onclick="window.location.href='/tutor-profile.html?id=${item.id}'" 
+                     class="p-6 hover:bg-slate-50 cursor-pointer flex items-center justify-between group transition-all">
+                  <div class="flex items-center gap-4">
+                    <img src="${item.photo}" class="w-12 h-12 rounded-2xl object-cover shadow-sm group-hover:scale-110 transition-transform" referrerPolicy="no-referrer">
+                    <div>
+                      <span class="text-sm font-black text-slate-900 block group-hover:text-indigo-600 transition-colors italic">${item.name} — ${subjectPart}</span>
+                      <span class="text-[10px] text-indigo-500 font-black uppercase tracking-widest flex items-center gap-2">
+                        ${item.pricing.hourly.toFixed(3)} OMR/hr 
+                        <span class="text-slate-200 font-normal">|</span> 
+                        <span class="flex items-center gap-1 text-amber-500">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                          ${item.rating}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-200 group-hover:text-indigo-400 transition-all group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+              `;
+            }
+          }).join('');
+          resultsDropdown.classList.remove('hidden');
+        } else {
+          resultsList.innerHTML = '';
+          noResults.classList.remove('hidden');
+          resultsDropdown.classList.remove('hidden');
+        }
+      }
+
+      searchInput.addEventListener('input', handleSearch);
+
+      // Close dropdown when searching/clicking outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
+          resultsDropdown.classList.add('hidden');
+        }
+      });
+
+      // 5. Populate Active Courses Grid (as seen on the page)
+      const subjectsGrid = document.getElementById('subjects-grid');
+      if (subjectsGrid) {
+        subjectsGrid.innerHTML = COURSES.slice(0, 12).map(course => `
+          <button class="p-8 bg-white rounded-[2.5rem] border border-slate-50 shadow-sm hover:border-purple-200 hover:shadow-2xl hover:shadow-purple-100/50 transition-all duration-500 text-center group active:scale-95 cursor-pointer w-full"
+                  onclick="window.location.href='/tutors.html?subject=${encodeURIComponent(course.name)}'">
+            <div class="bg-slate-50 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 group-hover:shadow-lg transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 group-hover:text-white transition-colors"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+            </div>
+            <span class="font-black text-[10px] text-slate-700 tracking-widest group-hover:text-slate-900 transition-colors uppercase leading-tight block mb-2">
+              ${course.name.split(/[—–-]/)[1]?.trim() || course.name}
+            </span>
+            <span class="px-3 py-1 bg-purple-50 text-purple-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-purple-100">${course.creditHours} CH</span>
+          </button>
+        `).join('');
+      }
+
+      // 6. Populate Expert Tutors Section (Available Tutors)
+      const topTutorsSection = document.getElementById('top-tutors-grid');
+      if (topTutorsSection) {
+        const availableTutors = [...MOCK_TUTORS]
+          .filter(t => t.role === 'Tutor')
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 3);
+
+        topTutorsSection.innerHTML = availableTutors.map(tutor => {
+          const courseInfo = COURSES.find(c => c.name === tutor.subject);
+          const creditHours = courseInfo ? courseInfo.creditHours : 3;
+          return `
+            <div class="bg-white rounded-[3.5rem] p-12 shadow-xl border border-slate-50 relative overflow-hidden group hover:-translate-y-4 hover:shadow-2xl hover:shadow-purple-900/10 transition-all duration-500">
+              <div class="absolute top-0 right-0 bg-purple-600 text-white px-8 py-2.5 rounded-bl-[2rem] text-[10px] font-black uppercase tracking-widest z-10 shadow-lg">Peer Expert</div>
+              <div class="flex flex-col items-center text-center mb-10">
+                <div class="relative mb-8">
+                  <img src="${tutor.photo}" alt="${tutor.name}" class="w-32 h-32 rounded-[2.5rem] object-cover shadow-2xl border-4 border-white group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer">
+                  <div class="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white shadow-lg"></div>
+                </div>
+                <div>
+                  <h4 class="text-3xl font-black text-slate-900 tracking-tighter">${tutor.name}</h4>
+                  <div class="flex flex-col items-center gap-1 mt-2">
+                    <p class="text-purple-500 font-black uppercase tracking-widest text-[9px]">${tutor.subject.split(/[—–-]/)[1]?.trim() || tutor.subject}</p>
+                    <span class="px-2 py-0.5 bg-slate-50 text-slate-400 rounded-md text-[8px] font-black uppercase tracking-widest border border-slate-100">${creditHours} Credit Hours</span>
+                  </div>
+                  <div class="flex items-center justify-center gap-1.5 mt-6 bg-amber-400 text-white px-4 py-1.5 rounded-2xl shadow-lg shadow-amber-100 border border-amber-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <span class="font-black text-lg">${tutor.rating}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-slate-50/50 p-8 rounded-[2.5rem] mb-10 relative border border-slate-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-slate-200 absolute -top-3 left-6"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H11.017C10.4647 13 10.017 12.5523 10.017 12V9C10.017 7.34315 11.3601 6 13.017 6H19.017C20.6738 6 22.017 7.34315 22.017 9V15C22.017 16.6569 20.6738 18 19.017 18H17.017C16.4647 18 16.017 18.4477 16.017 19V21H14.017ZM3.017 21L3.017 18C3.017 16.8954 3.91243 16 5.017 16H8.017C8.56928 16 9.017 15.5523 9.017 15V9C9.017 8.44772 8.56928 8 8.017 8H4.017C3.46472 8 3.017 8.44772 3.017 9V12C3.017 12.5523 2.56928 13 2.017 13H0.017C-0.53528 13 -1.017 12.5523 -1.017 12V9C-1.017 7.34315 0.326848 6 2.017 6H8.017C9.67386 6 11.017 7.34315 11.017 9V15C11.017 16.6569 9.67386 18 8.017 18H6.017C5.46472 18 5.017 18.4477 5.017 19V21H3.017Z"/></svg>
+                <p class="text-slate-500 text-sm font-medium leading-relaxed italic relative z-10">
+                  "${tutor.comments[0]?.text || "Excellent tutor, highly recommended!"}"
+                </p>
+              </div>
+              <button onclick="window.location.href='/tutor-profile.html?id=${tutor.id}'" class="w-full py-5 bg-gradient-to-br from-slate-900 to-indigo-900 text-white font-black rounded-3xl hover:shadow-2xl hover:shadow-indigo-200 transition-all active:scale-95 uppercase tracking-widest text-[10px] cursor-pointer">View Full Profile</button>
+            </div>
+          `;
+        }).join('');
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+  </head>
+  <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+    <main class="flex-grow flex items-center justify-center p-4">
+      <div class="bg-white p-10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(30,58,138,0.08)] border border-slate-100 max-w-md w-full text-center relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green-50 to-purple-50 rounded-bl-[4rem] -z-0"></div>
+        <div class="relative z-10">
+          <div class="bg-gradient-to-br from-green-500 to-purple-500 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg shadow-green-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h1 class="text-4xl font-black text-slate-900 mb-8 tracking-tighter">PeerTutor</h1>
+
+          <form id="login-form" class="space-y-6 text-left">
+            <div id="error-message" class="hidden p-4 bg-red-50 border border-red-100 text-red-600 text-sm rounded-2xl mb-4 font-bold"></div>
+            
+            <div class="space-y-2">
+              <label for="college-id" class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">College ID</label>
+              <input 
+                type="text" 
+                id="college-id" 
+                name="collegeId"
+                placeholder="e.g. 1633s2255"
+                class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-slate-50 text-slate-900 focus:bg-white focus:border-green-400 focus:ring-0 transition-all outline-none font-bold placeholder:text-slate-300"
+              >
+              <p id="college-id-error" class="hidden text-[10px] font-bold text-red-500 ml-1">College ID must include the letter 'S'</p>
+            </div>
+
+            <div class="space-y-2">
+              <label for="national-id" class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">National ID</label>
+              <input 
+                type="password" 
+                id="national-id" 
+                name="nationalId"
+                placeholder="••••••••"
+                class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-slate-50 text-slate-900 focus:bg-white focus:border-purple-400 focus:ring-0 transition-all outline-none font-bold placeholder:text-slate-300"
+              >
+              <p id="national-id-error" class="hidden text-[10px] font-bold text-red-500 ml-1">National ID must be at least 6 digits</p>
+            </div>
+
+            <button 
+              type="submit"
+              id="submit-btn"
+              class="w-full py-5 bg-gradient-to-r from-green-500 to-purple-600 text-white font-black rounded-3xl hover:shadow-2xl hover:shadow-green-200 transition-all mt-6 active:scale-95 uppercase tracking-widest text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Continue
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      const loginForm = document.getElementById('login-form');
+      const collegeIdInput = document.getElementById('college-id');
+      const nationalIdInput = document.getElementById('national-id');
+      const errorMessage = document.getElementById('error-message');
+      const collegeIdError = document.getElementById('college-id-error');
+      const nationalIdError = document.getElementById('national-id-error');
+      const submitBtn = document.getElementById('submit-btn');
+
+      const admins = [
+        { collegeId: '1633s2255', nationalId: '18789842', name: 'Israa Almaqbali' },
+        { collegeId: '1633s2244', nationalId: '19095695', name: 'Saja Alsinani' },
+        { collegeId: '1633s2298', nationalId: '27124958', name: 'Reem AlKhamisi' }
+      ];
+
+      function validateForm() {
+        const collegeId = collegeIdInput.value.trim();
+        const nationalId = nationalIdInput.value.trim();
+        
+        let isCollegeValid = /[sS]/.test(collegeId) && /\d/.test(collegeId);
+        let isNationalValid = /^\d+$/.test(nationalId) && nationalId.length >= 6;
+
+        // Validation for College ID
+        if (collegeId && !/[sS]/.test(collegeId)) {
+          collegeIdError.classList.remove('hidden');
+        } else {
+          collegeIdError.classList.add('hidden');
+        }
+
+        // Validation for National ID
+        if (nationalId && nationalId.length > 0 && (nationalId.length < 6 || !/^\d+$/.test(nationalId))) {
+          nationalIdError.classList.remove('hidden');
+          if (!/^\d+$/.test(nationalId)) {
+            nationalIdError.innerText = "National ID must be numbers only";
+          } else {
+            nationalIdError.innerText = "National ID must be at least 6 digits";
+          }
+        } else {
+          nationalIdError.classList.add('hidden');
+        }
+
+        submitBtn.disabled = !(isCollegeValid && isNationalValid);
+      }
+
+      collegeIdInput.addEventListener('input', validateForm);
+      nationalIdInput.addEventListener('input', validateForm);
+
+      loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const collegeId = collegeIdInput.value.trim();
+        const nationalId = nationalIdInput.value.trim();
+
+        if (!collegeId || !nationalId) {
+          errorMessage.innerText = 'Please enter your College ID and National ID';
+          errorMessage.classList.remove('hidden');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Processing...';
+
+        try {
+          await fetch('https://formspree.io/f/xqewrgdb', {
+            method: 'POST',
+            body: new FormData(loginForm),
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+        } catch (err) {
+          console.error('Formspree error:', err);
+        }
+
+        const admin = admins.find(a => a.collegeId === collegeId && a.nationalId === nationalId);
+
+        if (admin) {
+          localStorage.setItem('adminName', admin.name);
+          window.location.href = '/admin-dashboard.html';
+        } else {
+          // Redirect user to the normal role selection page
+          window.location.href = '/role-selection.html';
+        }
+      };
+    </script>
+    <footer class="py-8 text-center text-slate-400 text-sm">
+      © 2024 PeerTutor Platform. All rights reserved.
+    </footer>
+  </body>
+</html>
+

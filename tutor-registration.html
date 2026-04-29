@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join as a Tutor - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+      body { font-family: 'Plus Jakarta Sans', sans-serif; }
+      
+      input:focus, select:focus, textarea:focus {
+        border-color: #9333ea;
+        box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+      }
+      
+      .mode-card.active {
+        border-color: #9333ea;
+        background-color: #faf5ff;
+        color: #9333ea;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <a href="/tutor-auth.html" class="flex items-center gap-2 no-underline group">
+        <div class="bg-gradient-to-br from-green-500 to-purple-600 p-1.5 rounded-lg group-hover:shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span class="text-xl font-black text-slate-900 tracking-tighter">PeerTutor <span class="text-purple-500 text-xs font-bold uppercase tracking-widest ml-1">Registration</span></span>
+      </a>
+      <a href="/tutor-auth.html" class="text-slate-400 hover:text-slate-600 font-bold text-sm">Cancel & Return</a>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl font-black text-slate-900 mb-4 tracking-tighter">Join as a Tutor</h1>
+        <p class="text-slate-400 font-medium text-lg italic">"Unlock your potential by helping others reach theirs."</p>
+      </div>
+
+      <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] border border-slate-100 relative overflow-hidden">
+        <form id="registration-form" class="space-y-12">
+          <!-- Basic Info -->
+          <section>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-black shadow-inner">1</div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Basic Information</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+                <input type="text" name="name" required placeholder="Enter your full name" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">UTAS Email</label>
+                <input type="email" name="email" required pattern=".*@utas\.edu\.om" title="Please use your @utas.edu.om email" placeholder="e.g. 1633s2255@utas.edu.om" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Phone Number</label>
+                <input type="tel" name="phone" id="phone-input" required placeholder="e.g. 91234567" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+                <p id="phone-error" class="hidden text-[10px] font-bold text-red-500 ml-1">Phone number must be 8 digits and start with 9 or 7</p>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">College ID</label>
+                <input type="text" name="collegeId" required placeholder="e.g. 16J2233" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Academic Year</label>
+                <select name="year" required class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold transition-all appearance-none">
+                  <option value="">Select your year</option>
+                  <option value="Year 1">Year 1</option>
+                  <option value="Year 2">Year 2</option>
+                  <option value="Year 3">Year 3</option>
+                  <option value="Year 4">Year 4</option>
+                  <option value="Graduate">Graduate</option>
+                </select>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Overall GPA (4.0 Scale)</label>
+                <input type="number" step="0.01" min="0" max="4" name="gpa" required placeholder="e.g. 3.75" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+              </div>
+            </div>
+          </section>
+
+          <!-- Expertise -->
+          <section>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-black shadow-inner">2</div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Expertise & Proof</h2>
+            </div>
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Courses You Want to Teach</label>
+                <div id="course-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto p-4 bg-slate-50 rounded-2xl border-2 border-transparent">
+                  <!-- Courses will be populated here -->
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Upload Grades / Proof (PDF/Image)</label>
+                <div class="p-8 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50 text-center group hover:border-purple-300 transition-all cursor-pointer relative">
+                  <input type="file" name="proof" required class="absolute inset-0 opacity-0 cursor-pointer">
+                  <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-300 group-hover:text-purple-500 shadow-sm transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  </div>
+                  <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Select files to upload</p>
+                  <p class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest leading-loose">Max size 5MB • PDF, JPG, PNG</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Profile Details -->
+          <section>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-black shadow-inner">3</div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Teaching Profile</h2>
+            </div>
+            <div class="space-y-8">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Short Bio</label>
+                <textarea name="bio" rows="4" required placeholder="Tell us about yourself and your academic journey..." class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all resize-none"></textarea>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Teaching Philosophy</label>
+                <textarea name="philosophy" rows="4" required placeholder="How do you help students learn?" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all resize-none"></textarea>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Experience / Certificates / Workshops</label>
+                <textarea name="experience" rows="4" placeholder="List any relevant teaching experience, certifications, or workshops you have attended..." class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all resize-none"></textarea>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Preferred Teaching Mode</label>
+                  <div class="grid grid-cols-2 gap-4">
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="mode" value="Online" class="hidden peer">
+                      <div class="p-4 bg-slate-50 rounded-2xl text-center font-black text-xs text-slate-400 border-2 border-transparent peer-checked:bg-purple-50 peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all">ONLINE</div>
+                    </label>
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="mode" value="Face-to-Face" class="hidden peer">
+                      <div class="p-4 bg-slate-50 rounded-2xl text-center font-black text-xs text-slate-400 border-2 border-transparent peer-checked:bg-purple-50 peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all text-nowrap">FACE-TO-FACE</div>
+                    </label>
+                  </div>
+                </div>
+                <div class="space-y-4">
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Availability Days</label>
+                  <div class="flex gap-2 flex-wrap">
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="days" value="Sun" class="hidden peer">
+                      <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-[10px] font-black text-slate-400 border-2 border-transparent peer-checked:bg-purple-600 peer-checked:text-white transition-all uppercase">Sun</div>
+                    </label>
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="days" value="Mon" class="hidden peer">
+                      <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-[10px] font-black text-slate-400 border-2 border-transparent peer-checked:bg-purple-600 peer-checked:text-white transition-all uppercase">Mon</div>
+                    </label>
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="days" value="Tue" class="hidden peer">
+                      <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-[10px] font-black text-slate-400 border-2 border-transparent peer-checked:bg-purple-600 peer-checked:text-white transition-all uppercase">Tue</div>
+                    </label>
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="days" value="Wed" class="hidden peer">
+                      <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-[10px] font-black text-slate-400 border-2 border-transparent peer-checked:bg-purple-600 peer-checked:text-white transition-all uppercase">Wed</div>
+                    </label>
+                    <label class="cursor-pointer">
+                      <input type="checkbox" name="days" value="Thu" class="hidden peer">
+                      <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-[10px] font-black text-slate-400 border-2 border-transparent peer-checked:bg-purple-600 peer-checked:text-white transition-all uppercase text-nowrap">Thu</div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Preferred Time Window</label>
+                <input type="text" name="time" required placeholder="e.g. 2:00 PM – 8:00 PM" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+              </div>
+            </div>
+          </section>
+
+          <!-- Pricing -->
+          <section>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-black shadow-inner">4</div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Pricing Strategy (OMR)</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Weekly Price</label>
+                <input type="number" step="0.1" name="price_weekly" required placeholder="0.000" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold transition-all">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Monthly Price</label>
+                <input type="number" step="0.1" name="price_monthly" required placeholder="0.000" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold transition-all">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Midterm Prep</label>
+                <input type="number" step="0.1" name="price_midterm" required placeholder="0.000" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold transition-all">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Final Prep</label>
+                <input type="number" step="0.1" name="price_final" required placeholder="0.000" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold transition-all">
+              </div>
+            </div>
+          </section>
+
+          <!-- Account Security -->
+          <section>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-black shadow-inner">5</div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Account Security</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Password</label>
+                <input type="password" name="password" id="password" required placeholder="Enter your password" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+                <p class="text-[9px] text-slate-400 font-bold ml-1 uppercase tracking-widest">Use at least 8 characters with letters and numbers.</p>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" required placeholder="Confirm your password" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent outline-none font-bold placeholder:text-slate-300 transition-all">
+              </div>
+            </div>
+            <p id="password-error" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-4 hidden"></p>
+          </section>
+
+          <div class="p-6 bg-purple-50 rounded-3xl border border-purple-100 space-y-4">
+            <p class="text-sm font-bold text-slate-700 leading-relaxed">
+              “By registering as a tutor, you agree that 3% of your total monthly earnings will be deducted as a platform service fee.”
+            </p>
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <div class="relative">
+                <input type="checkbox" id="fee-agreement" required class="peer sr-only">
+                <div class="w-6 h-6 border-2 border-slate-200 rounded-md bg-white peer-checked:bg-purple-600 peer-checked:border-purple-600 transition-all flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 peer-checked:opacity-100 transition-opacity"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+              <span class="text-xs font-black text-slate-900 uppercase tracking-widest group-hover:text-purple-600 transition-colors">I accept the platform service fee of 3%</span>
+            </label>
+          </div>
+
+          <button type="submit" class="w-full p-6 bg-slate-900 text-white font-black rounded-3xl hover:bg-slate-800 transition-all uppercase tracking-widest text-sm shadow-xl shadow-slate-200">Submit Application</button>
+        </form>
+
+        <!-- Success Message Overlay -->
+        <div id="success-overlay" class="hidden absolute inset-0 bg-white z-50 flex flex-col items-center justify-center p-12 text-center animate-in fade-in zoom-in duration-500">
+          <div class="w-32 h-32 bg-green-50 rounded-[3rem] flex items-center justify-center mb-10 shadow-inner group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h2 class="text-5xl font-black text-slate-900 mb-6 tracking-tighter">Your request is under review</h2>
+          <p class="text-slate-500 font-medium max-w-sm mb-12 text-lg">Thank you for joining our community. An administrator will review your application and contact you via email shortly.</p>
+          <a href="/index.html" class="px-12 py-6 bg-slate-900 text-white font-black rounded-3xl hover:shadow-2xl hover:shadow-slate-300 transition-all uppercase tracking-widest text-xs">Return to Home</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="mt-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
+      © 2024 PeerTutor Platform. All rights reserved.
+    </footer>
+
+    <script type="module">
+      import { COURSES } from '/src/data.ts';
+
+      const courseList = document.getElementById('course-list');
+      COURSES.forEach(course => {
+        const label = document.createElement('label');
+        label.className = 'flex items-center gap-3 p-4 bg-white border-2 border-slate-100 rounded-xl cursor-pointer hover:border-purple-200 transition-all';
+        label.innerHTML = `
+          <input type="checkbox" name="courses" value="${course.name}" class="hidden peer">
+          <div class="w-6 h-6 border-2 border-slate-200 rounded-md flex items-center justify-center peer-checked:bg-purple-600 peer-checked:border-purple-600 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 peer-checked:opacity-100"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span class="text-xs font-bold text-slate-700 truncate">${course.name}</span>
+        `;
+        courseList.appendChild(label);
+      });
+
+      const form = document.getElementById('registration-form');
+      const overlay = document.getElementById('success-overlay');
+      const phoneInput = document.getElementById('phone-input');
+      const phoneError = document.getElementById('phone-error');
+
+      if (phoneInput) {
+        phoneInput.addEventListener('input', () => {
+          const phoneRegex = /^(9|7)[0-9]{7}$/;
+          if (phoneInput.value && !phoneRegex.test(phoneInput.value)) {
+            phoneError.classList.remove('hidden');
+          } else {
+            phoneError.classList.add('hidden');
+          }
+        });
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Basic email validation
+        const email = form.querySelector('[name="email"]').value;
+        if (!email.endsWith('@utas.edu.om')) {
+          alert('Please use your official @utas.edu.om email address.');
+          return;
+        }
+
+        // Phone validation
+        const phoneInput = document.getElementById('phone-input');
+        const phoneError = document.getElementById('phone-error');
+        const phoneRegex = /^(9|7)[0-9]{7}$/;
+        if (!phoneRegex.test(phoneInput.value)) {
+          phoneInput.classList.add('border-red-400');
+          phoneError.classList.remove('hidden');
+          return;
+        } else {
+          phoneInput.classList.remove('border-red-400');
+          phoneError.classList.add('hidden');
+        }
+
+        // Password validation
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        const errorEl = document.getElementById('password-error');
+        
+        errorEl.classList.add('hidden');
+
+        if (password !== confirmPassword) {
+          errorEl.textContent = "Passwords do not match";
+          errorEl.classList.remove('hidden');
+          return;
+        }
+
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          errorEl.textContent = "Password must be at least 8 characters and include both letters and numbers";
+          errorEl.classList.remove('hidden');
+          return;
+        }
+
+        // Mode validation (at least one)
+        const modes = form.querySelectorAll('input[name="mode"]:checked');
+        if (modes.length === 0) {
+          alert('Please select at least one teaching mode.');
+          return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting...';
+
+        const formData = new FormData(form);
+
+        try {
+          // Send to Formspree
+          const response = await fetch('https://formspree.io/f/xqewrgdb', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            // Show success overlay
+            overlay.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            alert('Oops! There was a problem submitting your form. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit Application';
+          }
+        } catch (error) {
+          alert('Oops! There was a problem submitting your form. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Submit Application';
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutor Application Form - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+      
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+
+      .step-dot.active {
+        background: #9333ea;
+        box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+      }
+      
+      .form-section {
+        display: none;
+      }
+      
+      .form-section.active {
+        display: block;
+        animation: slideIn 0.5s ease-out;
+      }
+
+      @keyframes slideIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <a href="/role-selection.html" class="flex items-center gap-2 no-underline group">
+        <div class="bg-gradient-to-br from-green-500 to-purple-600 p-1.5 rounded-lg group-hover:shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span class="text-xl font-black text-slate-900 tracking-tighter">PeerTutor <span class="text-purple-500 text-xs font-bold uppercase tracking-widest ml-1">Tutor Application</span></span>
+      </a>
+      <a href="/role-selection.html" class="text-slate-400 hover:text-slate-600 font-bold text-sm">Cancel & Return</a>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 pt-12">
+      <!-- Progress Indicator -->
+      <div class="mb-12 flex justify-center items-center gap-4">
+        <div class="flex items-center gap-2">
+          <div class="step-dot active w-3 h-3 rounded-full" id="dot-1"></div>
+          <div class="step-dot w-3 h-3 rounded-full bg-slate-200" id="dot-2"></div>
+          <div class="step-dot w-3 h-3 rounded-full bg-slate-200" id="dot-3"></div>
+          <div class="step-dot w-3 h-3 rounded-full bg-slate-200" id="dot-4"></div>
+        </div>
+        <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2" id="step-label">Step 1 of 4: Personal Info</span>
+      </div>
+
+      <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] border border-slate-100 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-50/50 to-transparent -z-0"></div>
+
+        <form id="tutor-app-form" class="relative z-10">
+          <!-- STEP 1: Personal Information -->
+          <div class="form-section active" id="section-1">
+            <div class="mb-10">
+              <h2 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Personal Information</h2>
+              <p class="text-slate-400 font-medium">Tell us who you are and how we can reach you.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+                <input type="text" name="fullName" required placeholder="Enter your full name" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">College ID</label>
+                <input type="text" name="collegeId" id="college-id-input" required placeholder="e.g. 1633s2255" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+                <p id="college-id-error" class="hidden text-[10px] font-bold text-red-500 ml-1">College ID must include the letter 'S'</p>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+                <input type="email" name="email" required placeholder="university@email.com" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Phone Number</label>
+                <input type="tel" id="phone-input" name="phone" required placeholder="XXXXXXXX (8 digits starting with 7/9)" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+                <p id="phone-error" class="hidden text-[10px] font-bold text-red-500 ml-1">Phone number must be 8 digits and start with 9 or 7</p>
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Academic Year</label>
+                <select name="academicYear" required class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold">
+                  <option value="">Select your year</option>
+                  <option value="Foundation">Foundation</option>
+                  <option value="Year 1">Year 1</option>
+                  <option value="Year 2">Year 2</option>
+                  <option value="Year 3">Year 3</option>
+                  <option value="Year 4/Final">Year 4/Final</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: Academic Information -->
+          <div class="form-section text-left" id="section-2">
+            <div class="mb-10">
+              <h2 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Academic Records</h2>
+              <p class="text-slate-400 font-medium">Your credentials help students trust your expertise.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Current GPA</label>
+                <input type="number" step="0.01" name="gpa" required placeholder="e.g. 3.85" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Tutor Level</label>
+                <div class="flex gap-4">
+                  <label class="flex-1">
+                    <input type="radio" name="level" value="Undergraduate" required class="hidden peer">
+                    <div class="p-4 border-2 border-slate-50 bg-slate-50 rounded-2xl text-center font-bold text-slate-400 peer-checked:bg-white peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all cursor-pointer">Undergraduate</div>
+                  </label>
+                  <label class="flex-1">
+                    <input type="radio" name="level" value="Graduate" class="hidden peer">
+                    <div class="p-4 border-2 border-slate-50 bg-slate-50 rounded-2xl text-center font-bold text-slate-400 peer-checked:bg-white peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all cursor-pointer">Graduate</div>
+                  </label>
+                </div>
+              </div>
+              <div class="space-y-4 md:col-span-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Course(s) you want to teach</label>
+                <div id="course-checkboxes" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto p-4 bg-slate-50 rounded-3xl border-2 border-transparent focus-within:border-purple-400 transition-all custom-scrollbar">
+                  <!-- Courses will be populated here as checkboxes -->
+                </div>
+                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest ml-1 mt-1 italic">Select all courses you are qualified to teach</p>
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Grade received in target course(s)</label>
+                <input type="text" name="gradeReceived" required placeholder="e.g. A in Grammar, A- in Writing" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: Teaching Details -->
+          <div class="form-section text-left" id="section-3">
+            <div class="mb-10">
+              <h2 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Teaching Logistics</h2>
+              <p class="text-slate-400 font-medium">How and when would you like to conduct your sessions?</p>
+            </div>
+            
+            <div class="space-y-8">
+              <div class="space-y-4">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Preferred Teaching Mode</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <label>
+                    <input type="radio" name="mode" value="Online" required class="hidden peer">
+                    <div class="p-4 border-2 border-slate-50 bg-slate-50 rounded-2xl text-center font-bold text-slate-400 peer-checked:bg-white peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all cursor-pointer">Online Only</div>
+                  </label>
+                  <label>
+                    <input type="radio" name="mode" value="Face-to-Face" class="hidden peer">
+                    <div class="p-4 border-2 border-slate-50 bg-slate-50 rounded-2xl text-center font-bold text-slate-400 peer-checked:bg-white peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all cursor-pointer">Face-to-Face</div>
+                  </label>
+                  <label>
+                    <input type="radio" name="mode" value="Both" class="hidden peer">
+                    <div class="p-4 border-2 border-slate-50 bg-slate-50 rounded-2xl text-center font-bold text-slate-400 peer-checked:bg-white peer-checked:border-purple-400 peer-checked:text-purple-600 transition-all cursor-pointer">Both Modes</div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Availability Days</label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <label><input type="checkbox" name="days" value="Sun" class="hidden peer"><div class="p-3 bg-slate-50 rounded-xl text-center text-xs font-black peer-checked:bg-purple-600 peer-checked:text-white transition-all cursor-pointer">SUN</div></label>
+                    <label><input type="checkbox" name="days" value="Mon" class="hidden peer"><div class="p-3 bg-slate-50 rounded-xl text-center text-xs font-black peer-checked:bg-purple-600 peer-checked:text-white transition-all cursor-pointer">MON</div></label>
+                    <label><input type="checkbox" name="days" value="Tue" class="hidden peer"><div class="p-3 bg-slate-50 rounded-xl text-center text-xs font-black peer-checked:bg-purple-600 peer-checked:text-white transition-all cursor-pointer">TUE</div></label>
+                    <label><input type="checkbox" name="days" value="Wed" class="hidden peer"><div class="p-3 bg-slate-50 rounded-xl text-center text-xs font-black peer-checked:bg-purple-600 peer-checked:text-white transition-all cursor-pointer">WED</div></label>
+                    <label><input type="checkbox" name="days" value="Thu" class="hidden peer"><div class="p-3 bg-slate-50 rounded-xl text-center text-xs font-black peer-checked:bg-purple-600 peer-checked:text-white transition-all cursor-pointer">THU</div></label>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Preferred Time Window</label>
+                  <input type="text" name="preferredTime" required placeholder="e.g. 2:00 PM – 6:00 PM" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Hourly Tutoring Price (OMR)</label>
+                <input type="number" step="0.1" name="price" required placeholder="e.g. 3.500" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300">
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: Tutor Profile -->
+          <div class="form-section text-left" id="section-4">
+            <div class="mb-10">
+              <h2 class="text-3xl font-black text-slate-900 mb-2 tracking-tighter">Your Public Identity</h2>
+              <p class="text-slate-400 font-medium">Finalize your profile with your teaching story.</p>
+            </div>
+            
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">About You (Bio)</label>
+                <textarea name="bio" rows="3" required placeholder="Short introduction about yourself..." class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300 resize-none"></textarea>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Teaching Philosophy</label>
+                <textarea name="philosophy" rows="3" required placeholder="How do you help students learn best?" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300 resize-none"></textarea>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Academic Achievements</label>
+                  <textarea name="achievements" rows="3" placeholder="Awards, scholarships, or dean's list..." class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300 resize-none"></textarea>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Workshops or Certificates</label>
+                  <textarea name="certificates" rows="3" placeholder="RE-Tech, IELTS 7.5, volunteering..." class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 transition-all outline-none font-bold placeholder:text-slate-300 resize-none"></textarea>
+                </div>
+              </div>
+
+              <!-- Profile Photo Mock -->
+              <div class="p-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 text-center group cursor-pointer hover:border-purple-400 transition-all">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-300 group-hover:text-purple-500 transition-colors shadow-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                </div>
+                <p class="text-xs font-black text-slate-600 uppercase tracking-widest">Upload Profile Photo</p>
+                <input type="file" name="photo" class="hidden">
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Navigation -->
+          <div class="mt-12 flex justify-between gap-4">
+            <button type="button" id="prev-btn" class="hidden px-10 py-5 bg-slate-100 text-slate-400 font-bold rounded-3xl hover:bg-slate-200 transition-all uppercase tracking-widest text-xs">Previous</button>
+            <button type="button" id="next-btn" class="flex-grow px-10 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-3xl hover:shadow-2xl hover:shadow-purple-200 transition-all uppercase tracking-widest text-xs">Next Step</button>
+            <button type="submit" id="submit-btn" class="hidden flex-grow px-10 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-3xl hover:shadow-2xl hover:shadow-purple-200 transition-all uppercase tracking-widest text-xs">Submit Tutor Application</button>
+          </div>
+        </form>
+
+        <!-- Success Message -->
+        <div id="success-message" class="hidden absolute inset-0 bg-white z-[50] flex flex-col items-center justify-center p-12 text-center animate-in fade-in duration-500">
+           <div class="w-24 h-24 bg-green-50 rounded-[2rem] flex items-center justify-center mb-10 shadow-inner group">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+           </div>
+           <h2 class="text-4xl font-black text-slate-900 mb-4 tracking-tighter">Application Successful</h2>
+           <p class="text-slate-500 font-medium max-w-sm mb-12">Your tutor application has been submitted successfully. Please wait for admin approval.</p>
+           <button onclick="window.location.href='/role-selection.html'" class="px-10 py-5 bg-slate-900 text-white font-black rounded-3xl hover:shadow-2xl hover:shadow-slate-300 transition-all uppercase tracking-widest text-xs">Back to Role Selection</button>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      import { SUBJECTS } from '/src/data.ts';
+
+      const courseContainer = document.getElementById('course-checkboxes');
+      SUBJECTS.forEach(subject => {
+        const label = document.createElement('label');
+        label.className = 'flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 hover:border-purple-200 cursor-pointer transition-all group';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'courses';
+        checkbox.value = subject;
+        checkbox.className = 'w-4 h-4 rounded text-purple-600 focus:ring-purple-500 border-slate-300 transition-all';
+        
+        const text = document.createElement('span');
+        text.className = 'text-[11px] font-bold text-slate-700 group-hover:text-purple-600 transition-colors';
+        text.textContent = subject;
+        
+        label.appendChild(checkbox);
+        label.appendChild(text);
+        courseContainer.appendChild(label);
+      });
+
+      const form = document.getElementById('tutor-app-form');
+      const sections = document.querySelectorAll('.form-section');
+      const dots = document.querySelectorAll('.step-dot');
+      const stepLabel = document.getElementById('step-label');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const submitBtn = document.getElementById('submit-btn');
+      const successMessage = document.getElementById('success-message');
+
+      const collegeInput = document.getElementById('college-id-input');
+      const collegeError = document.getElementById('college-id-error');
+      const phoneInput = document.getElementById('phone-input');
+      const phoneError = document.getElementById('phone-error');
+
+      if (collegeInput) {
+        collegeInput.addEventListener('input', () => {
+          const collegeValid = collegeInput.value && /[sS]/.test(collegeInput.value) && /\d/.test(collegeInput.value);
+          if (collegeInput.value && !/[sS]/.test(collegeInput.value)) {
+            collegeError.classList.remove('hidden');
+          } else {
+            collegeError.classList.add('hidden');
+          }
+        });
+      }
+
+      if (phoneInput) {
+        phoneInput.addEventListener('input', () => {
+          const phoneRegex = /^(9|7)[0-9]{7}$/;
+          if (phoneInput.value && !phoneRegex.test(phoneInput.value)) {
+            phoneError.classList.remove('hidden');
+          } else {
+            phoneError.classList.add('hidden');
+          }
+        });
+      }
+
+      let currentStep = 1;
+
+      const updateUI = () => {
+        sections.forEach((s, idx) => {
+          s.classList.toggle('active', idx === currentStep - 1);
+        });
+        
+        dots.forEach((d, idx) => {
+          d.classList.toggle('active', idx === currentStep - 1);
+          d.style.backgroundColor = idx < currentStep - 1 ? '#9333ea' : (idx === currentStep - 1 ? '' : '#e2e8f0');
+        });
+
+        const labels = [
+          'Step 1 of 4: Personal Info',
+          'Step 2 of 4: Academic Info',
+          'Step 3 of 4: Teaching Details',
+          'Step 4 of 4: Tutor Profile'
+        ];
+        stepLabel.textContent = labels[currentStep - 1];
+
+        prevBtn.classList.toggle('hidden', currentStep === 1);
+        nextBtn.classList.toggle('hidden', currentStep === 4);
+        submitBtn.classList.toggle('hidden', currentStep !== 4);
+      };
+
+      nextBtn.addEventListener('click', () => {
+        // Simple validation for current section
+        const currentInputs = sections[currentStep - 1].querySelectorAll('input[required], select[required], textarea[required]');
+        let valid = true;
+        
+        currentInputs.forEach(input => {
+          if (!input.value) {
+            input.classList.add('border-red-400');
+            valid = false;
+          } else {
+            input.classList.remove('border-red-400');
+          }
+        });
+
+        // Specific Validation for Step 1
+        if (currentStep === 1) {
+          const collegeInput = document.getElementById('college-id-input');
+          const collegeError = document.getElementById('college-id-error');
+          const phoneInput = document.getElementById('phone-input');
+          const phoneError = document.getElementById('phone-error');
+          
+          const collegeValid = collegeInput.value && /[sS]/.test(collegeInput.value) && /\d/.test(collegeInput.value);
+          const phoneRegex = /^(9|7)[0-9]{7}$/;
+          const phoneValid = phoneInput.value && phoneRegex.test(phoneInput.value);
+          
+          if (!collegeValid) {
+            collegeInput.classList.add('border-red-400');
+            collegeError.classList.remove('hidden');
+            valid = false;
+          } else {
+            collegeInput.classList.remove('border-red-400');
+            collegeError.classList.add('hidden');
+          }
+
+          if (!phoneValid) {
+            phoneInput.classList.add('border-red-400');
+            phoneError.classList.remove('hidden');
+            valid = false;
+          } else {
+            phoneInput.classList.remove('border-red-400');
+            phoneError.classList.add('hidden');
+          }
+        }
+
+        // Specific Validation for Step 2 (Expertise)
+        if (currentStep === 2) {
+          const checkedCourses = sections[currentStep - 1].querySelectorAll('input[name="courses"]:checked');
+          if (checkedCourses.length === 0) {
+            const container = document.getElementById('course-checkboxes');
+            container.classList.add('border-red-400');
+            valid = false;
+          } else {
+            const container = document.getElementById('course-checkboxes');
+            container.classList.remove('border-red-400');
+          }
+        }
+
+        if (valid) {
+          currentStep++;
+          updateUI();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentStep--;
+        updateUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Final Validation check before submission
+        const allRequiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+        let isFormValid = true;
+        
+        allRequiredInputs.forEach(input => {
+          if (!input.value) {
+            input.classList.add('border-red-400');
+            isFormValid = false;
+          } else {
+            input.classList.remove('border-red-400');
+          }
+        });
+
+        const collegeInput = document.getElementById('college-id-input');
+        const collegeError = document.getElementById('college-id-error');
+        const phoneInput = document.getElementById('phone-input');
+        const phoneError = document.getElementById('phone-error');
+        const phoneRegex = /^(9|7)[0-9]{7}$/;
+        
+        const collegeValid = collegeInput.value && /[sS]/.test(collegeInput.value) && /\d/.test(collegeInput.value);
+        const phoneValid = phoneInput.value && phoneRegex.test(phoneInput.value);
+
+        if (!collegeValid || !phoneValid) {
+          isFormValid = false;
+          currentStep = 1;
+          updateUI();
+          if (!collegeValid) {
+            collegeInput.classList.add('border-red-400');
+            collegeError.classList.remove('hidden');
+          }
+          if (!phoneValid) {
+            phoneInput.classList.add('border-red-400');
+            phoneError.classList.remove('hidden');
+          }
+        }
+
+        if (!isFormValid) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting...';
+
+        const formData = new FormData(form);
+        
+        try {
+          // Send to Formspree
+          const response = await fetch('https://formspree.io/f/xqewrgdb', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            const app = {
+              id: Date.now(),
+              name: formData.get('fullName'),
+              email: formData.get('email'),
+              collegeId: formData.get('collegeId'),
+              expertise: Array.from(form.querySelectorAll('input[name="courses"]:checked')).map(c => c.value).join(', '),
+              level: formData.get('level'),
+              academicYear: formData.get('academicYear'),
+              status: 'Pending',
+              date: 'Just now',
+              details: {
+                phone: formData.get('phone'),
+                gpa: formData.get('gpa'),
+                gradeReceived: formData.get('gradeReceived'),
+                mode: formData.get('mode'),
+                days: Array.from(form.querySelectorAll('input[name="days"]:checked')).map(c => c.value).join(', '),
+                time: formData.get('preferredTime'),
+                price: formData.get('price'),
+                bio: formData.get('bio'),
+                philosophy: formData.get('philosophy'),
+                achievements: formData.get('achievements'),
+                certificates: formData.get('certificates')
+              }
+            };
+
+            // Save to localStorage
+            const pendingApps = JSON.parse(localStorage.getItem('pendingTutorApps') || '[]');
+            pendingApps.unshift(app);
+            localStorage.setItem('pendingTutorApps', JSON.stringify(pendingApps));
+
+            successMessage.classList.remove('hidden');
+            successMessage.classList.add('flex');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            alert('Oops! There was a problem submitting your form. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit Tutor Application';
+          }
+        } catch (error) {
+          alert('Oops! There was a problem submitting your form. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Submit Tutor Application';
+        }
+      });
+    </script>
+  </body>
+</html>

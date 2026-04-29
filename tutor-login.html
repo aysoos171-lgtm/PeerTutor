@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutor Login - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+      body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+  </head>
+  <body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="max-w-md w-full">
+      <div class="text-center mb-10">
+        <a href="/tutor-auth.html" class="inline-flex items-center gap-2 no-underline mb-8 group">
+          <div class="bg-gradient-to-br from-green-500 to-purple-600 p-1.5 rounded-lg group-hover:shadow-lg transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <span class="text-2xl font-black text-slate-900 tracking-tighter">PeerTutor</span>
+        </a>
+        <h1 class="text-4xl font-black text-slate-900 mb-2 tracking-tighter">Welcome Back</h1>
+        <p class="text-slate-400 font-medium italic">Login to your teaching dashboard</p>
+      </div>
+
+      <div class="bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100">
+        <!-- Login Form -->
+        <form class="space-y-6" id="login-form">
+          <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+            <input type="email" name="email" required placeholder="tutor@utas.edu.om" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 outline-none font-bold transition-all placeholder:text-slate-300">
+          </div>
+          <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Password</label>
+            <input type="password" name="password" required placeholder="••••••••" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 outline-none font-bold transition-all placeholder:text-slate-300">
+          </div>
+          <div class="flex items-center justify-between px-1">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" class="rounded border-slate-200 text-purple-600 focus:ring-purple-500">
+              <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Remember me</span>
+            </label>
+            <a href="#" id="forgot-password-link" class="text-[10px] font-black text-purple-600 uppercase tracking-widest hover:underline">Forgot password?</a>
+          </div>
+          <button type="submit" class="w-full p-5 bg-slate-900 text-white font-black rounded-2xl hover:bg-slate-800 transition-all uppercase tracking-widest text-xs shadow-xl shadow-slate-200">Login to Dashboard</button>
+        </form>
+
+        <!-- Reset Password Form -->
+        <div id="reset-password-section" class="hidden space-y-6">
+          <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+            <input type="email" id="reset-email" required placeholder="tutor@utas.edu.om" class="w-full p-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-purple-400 outline-none font-bold transition-all placeholder:text-slate-300">
+          </div>
+          <button id="send-reset-btn" class="w-full p-5 bg-slate-900 text-white font-black rounded-2xl hover:bg-slate-800 transition-all uppercase tracking-widest text-xs shadow-xl shadow-slate-200">Send Reset Link</button>
+          <div id="reset-success-msg" class="hidden p-4 bg-green-50 text-green-700 rounded-2xl text-[10px] font-black uppercase tracking-widest text-center">
+            Password reset link has been sent to your email.
+          </div>
+          <div class="text-center">
+            <a href="#" id="back-to-login" class="text-[10px] font-black text-purple-600 uppercase tracking-widest hover:underline">Back to Login</a>
+          </div>
+        </div>
+        
+        <div class="mt-8 text-center" id="signup-prompt">
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">New here? <a href="/tutor-registration.html" class="text-purple-600 hover:underline">Apply as a tutor</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      const loginForm = document.getElementById('login-form');
+      const resetSection = document.getElementById('reset-password-section');
+      const forgotLink = document.getElementById('forgot-password-link');
+      const backLink = document.getElementById('back-to-login');
+      const sendResetBtn = document.getElementById('send-reset-btn');
+      const resetSuccessMsg = document.getElementById('reset-success-msg');
+      const signupPrompt = document.getElementById('signup-prompt');
+      const resetEmail = document.getElementById('reset-email');
+
+      forgotLink.onclick = (e) => {
+        e.preventDefault();
+        loginForm.classList.add('hidden');
+        resetSection.classList.remove('hidden');
+        signupPrompt.classList.add('hidden');
+      };
+
+      backLink.onclick = (e) => {
+        e.preventDefault();
+        loginForm.classList.remove('hidden');
+        resetSection.classList.add('hidden');
+        signupPrompt.classList.remove('hidden');
+        resetSuccessMsg.classList.add('hidden');
+        resetEmail.value = '';
+      };
+
+      sendResetBtn.onclick = () => {
+        if (!resetEmail.value) {
+          alert('Please enter your email address.');
+          return;
+        }
+        resetSuccessMsg.classList.remove('hidden');
+        resetEmail.value = '';
+      };
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = loginForm.querySelector('input[type="email"]').value;
+
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging in...';
+
+        try {
+          await fetch('https://formspree.io/f/xqewrgdb', {
+            method: 'POST',
+            body: new FormData(loginForm),
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+        } catch (err) {
+          console.error('Formspree error:', err);
+        }
+
+        const namePart = email.split('@')[0];
+        const formattedName = namePart.split('.').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+        localStorage.setItem('tutorName', formattedName);
+        window.location.href = '/tutor-dashboard.html';
+      });
+    </script>
+  </body>
+</html>

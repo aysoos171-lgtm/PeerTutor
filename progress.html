@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Progress - PeerTutor</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" src="/src/chatbot.ts"></script>
+    <script type="module" src="/src/progress.ts"></script>
+  </head>
+  <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <a href="/index.html" class="flex items-center gap-2 no-underline group">
+        <div class="bg-gradient-to-br from-green-500 to-teal-600 p-1.5 rounded-lg group-hover:shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span class="text-xl font-black text-slate-900 tracking-tighter">PeerTutor <span class="text-green-500 text-xs font-bold uppercase tracking-widest ml-1">Progress</span></span>
+      </a>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/student-search.html" class="text-slate-600 hover:text-blue-600 font-bold no-underline transition-colors">Find Tutors</a>
+        <a href="/progress.html" class="text-green-600 font-black no-underline">My Progress</a>
+        <div class="flex items-center gap-3 pl-4 border-l border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-500 border border-green-100 shadow-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 w-full flex-grow">
+      <div class="mb-12 pl-2">
+        <h1 class="text-5xl font-black text-slate-900 mb-2 tracking-tighter">My Journey</h1>
+        <p class="text-slate-400 font-medium">Visualizing your academic growth and milestones.</p>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-l-8 border-l-blue-500 border border-slate-100 group hover:shadow-xl transition-all duration-300">
+          <div class="bg-blue-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 text-blue-600 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total</p>
+          <p class="text-3xl font-black text-slate-900">8 <span class="text-sm font-medium text-slate-300">Sessions</span></p>
+        </div>
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-l-8 border-l-purple-500 border border-slate-100 group hover:shadow-xl transition-all duration-300">
+          <div class="bg-purple-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 text-purple-600 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Time</p>
+          <p class="text-3xl font-black text-slate-900">12.5 <span class="text-sm font-medium text-slate-300">Hours</span></p>
+        </div>
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-l-8 border-l-orange-500 border border-slate-100 group hover:shadow-xl transition-all duration-300">
+          <div class="bg-orange-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 text-orange-600 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+          </div>
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Courses</p>
+          <p class="text-3xl font-black text-slate-900">3 <span class="text-sm font-medium text-slate-300">Active</span></p>
+        </div>
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-l-8 border-l-green-500 border border-slate-100 group hover:shadow-xl transition-all duration-300">
+          <div class="bg-green-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+          </div>
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Progress</p>
+          <div class="flex items-end gap-2">
+            <p class="text-3xl font-black text-slate-900">75%</p>
+            <span class="text-green-500 font-black text-sm mb-1">↑ 12%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column: Bookings & Payments -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Previous Bookings -->
+          <section class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
+            <div class="flex items-center justify-between mb-8">
+              <h2 class="text-2xl font-bold text-slate-900">Previous Bookings</h2>
+              <button class="text-blue-600 font-bold text-sm hover:underline">View All</button>
+            </div>
+            <div class="space-y-4">
+              <!-- Booking Card 1 -->
+              <div onclick="openCourseDetails(0)" class="flex flex-col md:flex-row md:items-center justify-between p-6 rounded-3xl bg-slate-50 border border-slate-100 gap-4 cursor-pointer hover:shadow-md hover:border-blue-200 transition-all group">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                    <img src="https://picsum.photos/seed/sarah/100/100" class="w-10 h-10 rounded-xl object-cover" referrerPolicy="no-referrer">
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900">Fatma Al-Harthy</h4>
+                    <p class="text-xs text-blue-600 font-bold uppercase tracking-wider">EDEN1101 – Advanced English Language Awareness: Grammar</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-4 text-sm">
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Mar 20, 2024</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>10:00 AM</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-black uppercase tracking-widest">Completed</span>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-black uppercase tracking-widest">Online</span>
+                </div>
+              </div>
+
+              <!-- Booking Card 2 -->
+              <div onclick="openCourseDetails(1)" class="flex flex-col md:flex-row md:items-center justify-between p-6 rounded-3xl bg-white border-2 border-blue-100 gap-4 shadow-lg shadow-blue-50 cursor-pointer hover:shadow-xl hover:scale-[1.01] transition-all group">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                    <img src="https://picsum.photos/seed/khalid/100/100" class="w-10 h-10 rounded-xl object-cover" referrerPolicy="no-referrer">
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900">Khalid Al-Rawahi</h4>
+                    <p class="text-xs text-blue-600 font-bold uppercase tracking-wider">EDEN1207 – Introduction to Linguistics</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-4 text-sm">
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Apr 10, 2024</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>02:00 PM</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="px-3 py-1 bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest">Upcoming</span>
+                  <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-[10px] font-black uppercase tracking-widest">Face-to-Face</span>
+                </div>
+              </div>
+
+              <!-- Booking Card 3 -->
+              <div onclick="openCourseDetails(2)" class="flex flex-col md:flex-row md:items-center justify-between p-6 rounded-3xl bg-slate-50 border border-slate-100 gap-4 opacity-70 cursor-pointer hover:opacity-100 hover:shadow-md transition-all group">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                    <img src="https://picsum.photos/seed/sarah/100/100" class="w-10 h-10 rounded-xl object-cover" referrerPolicy="no-referrer">
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900">Fatma Al-Harthy</h4>
+                    <p class="text-xs text-blue-600 font-bold uppercase tracking-wider">EDEN1101 – Advanced English Language Awareness: Grammar</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-4 text-sm">
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Mar 15, 2024</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>11:00 AM</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="px-3 py-1 bg-slate-200 text-slate-500 rounded-full text-[10px] font-black uppercase tracking-widest">Cancelled</span>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-black uppercase tracking-widest">Online</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Payment Record -->
+          <section class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8">Payment Record</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead>
+                  <tr class="text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                    <th class="pb-4 px-4">Type</th>
+                    <th class="pb-4 px-4">Amount</th>
+                    <th class="pb-4 px-4">Method</th>
+                    <th class="pb-4 px-4">Date</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                    <td class="py-4 px-4 font-bold text-slate-900">Hourly Session</td>
+                    <td class="py-4 px-4 font-black text-blue-600">15 OMR</td>
+                    <td class="py-4 px-4">
+                      <div class="flex items-center gap-2">
+                        <div class="bg-white px-2 py-1 rounded border border-slate-200 flex items-center gap-0.5 shadow-sm">
+                          <svg width="10" height="12" viewBox="0 0 256 315" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" fill="black">
+                            <path d="M213.803 167.03c.442 47.58 41.74 63.413 42.147 63.615-.35 1.116-6.599 22.563-21.757 44.716-13.104 19.153-26.705 38.235-48.13 38.63-21.05.394-27.815-12.44-51.837-12.44-24.03 0-31.504 12.061-51.834 12.833-20.676.772-36.17-20.68-49.348-39.717-26.938-38.908-47.491-110.012-19.748-158.151 13.758-23.89 38.334-39.027 64.933-39.42 20.287-.393 39.43 13.614 51.846 13.614 12.426 0 35.62-16.67 59.84-14.195 10.134.422 38.604 4.093 56.81 30.793-1.47.913-33.935 19.794-33.533 59.935zM175.769 54.085c10.877-13.21 18.242-31.554 16.225-49.855-15.713.645-34.705 10.507-45.977 23.658-10.1 11.655-18.929 30.393-16.56 48.276 17.534 1.366 35.435-8.869 46.312-22.079z"/>
+                          </svg>
+                          <span class="text-[10px] font-bold text-black tracking-tighter">Pay</span>
+                        </div>
+                        <span>Apple Pay</span>
+                      </div>
+                    </td>
+                    <td class="py-4 px-4 text-slate-500">Mar 20, 2024</td>
+                  </tr>
+                  <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                    <td class="py-4 px-4 font-bold text-slate-900">Midterm Prep Package</td>
+                    <td class="py-4 px-4 font-black text-blue-600">45 OMR</td>
+                    <td class="py-4 px-4">
+                      <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        <span>Visa</span>
+                      </div>
+                    </td>
+                    <td class="py-4 px-4 text-slate-500">Apr 05, 2024</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Column: Feedback & Reflection -->
+        <div class="space-y-8">
+          <!-- Tutor Feedback -->
+          <section class="bg-white rounded-[3rem] p-10 shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-black text-slate-900 mb-10 tracking-tight">Tutor Insights</h2>
+            <div class="space-y-6">
+              <div class="p-8 rounded-[2rem] bg-indigo-50 border border-indigo-100">
+                <div class="flex items-center gap-4 mb-8">
+                  <div class="p-1 bg-white rounded-2xl shadow-sm">
+                    <img src="https://picsum.photos/seed/sarah/100/100" class="w-12 h-12 rounded-xl object-cover" referrerPolicy="no-referrer">
+                  </div>
+                  <div>
+                    <h4 class="font-black text-slate-900 tracking-tight">Fatma Al-Harthy</h4>
+                    <p class="text-[10px] text-indigo-500 uppercase font-black tracking-widest mt-0.5">Language Expert</p>
+                  </div>
+                </div>
+                <div class="space-y-6">
+                  <div>
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1.5">Key Strengths</p>
+                    <p class="text-sm text-slate-600 font-medium">Excellent grasp of basic sentence structures and vocabulary.</p>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1.5">Growth Areas</p>
+                    <p class="text-sm text-slate-600 font-medium">Work on irregular verb conjugations and complex tenses.</p>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1.5">Action Plan</p>
+                    <p class="text-sm text-slate-600 font-medium">Review the "Conditional Sentences" worksheet before our next session.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Student Reflection -->
+          <section class="bg-white rounded-[3rem] p-10 shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-black text-slate-900 mb-10 tracking-tight">My Reflection</h2>
+            <div class="space-y-8">
+              <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Learning Summary</label>
+                <textarea class="w-full p-6 rounded-3xl bg-slate-50 border-2 border-slate-50 text-sm focus:bg-white focus:border-green-400 focus:ring-0 outline-none transition-all h-32 font-medium" placeholder="Write your thoughts...">I finally understood how to use 'if' clauses correctly. The examples Fatma gave were very helpful.</textarea>
+              </div>
+              <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Goal for Next Time</label>
+                <input type="text" class="w-full p-6 rounded-[1.5rem] bg-slate-50 border-2 border-slate-50 text-sm focus:bg-white focus:border-green-400 focus:ring-0 outline-none transition-all font-medium" placeholder="Set a goal..." value="Master irregular verbs in the past tense.">
+              </div>
+              <button class="w-full py-5 bg-gradient-to-r from-green-500 to-teal-600 text-white font-black rounded-3xl hover:shadow-xl hover:shadow-green-100 transition-all uppercase tracking-widest text-xs">Save Update</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Course Details Modal -->
+    <div id="course-details-modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 animate-in fade-in duration-300">
+      <div class="bg-white rounded-[3rem] w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col relative animate-in zoom-in-95 duration-300">
+        <!-- Close Button -->
+        <button onclick="closeCourseDetails()" class="absolute top-8 right-8 z-10 p-2 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+
+        <div class="overflow-y-auto p-10 space-y-10">
+          <!-- Header Info -->
+          <div class="flex items-start gap-6">
+            <div class="p-1.5 bg-slate-50 rounded-[2rem] border border-slate-100 shadow-sm shrink-0">
+              <img id="modal-tutor-img" src="" class="w-20 h-20 rounded-[1.5rem] object-cover" referrerPolicy="no-referrer">
+            </div>
+            <div class="space-y-1 pt-2">
+              <h3 id="modal-course-name" class="text-2xl font-black text-slate-900 leading-tight tracking-tight"></h3>
+              <p id="modal-tutor-name" class="text-slate-400 font-bold"></p>
+              <div class="flex flex-wrap gap-2 pt-2">
+                <span id="modal-status" class="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest whitespace-nowrap"></span>
+                <span id="modal-type" class="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest whitespace-nowrap"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Details -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+              <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Date & Time</p>
+              <div class="flex items-center gap-2 text-slate-900 font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span id="modal-date-time"></span>
+              </div>
+            </div>
+            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+              <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Progress Level</p>
+              <div class="flex items-center gap-3">
+                <div class="flex-grow bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div id="modal-progress-bar" class="bg-green-500 h-full rounded-full transition-all duration-500"></div>
+                </div>
+                <span id="modal-progress-text" class="text-sm font-black text-slate-900 shrink-0"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback Section -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Tutor Feedback
+            </h4>
+            <div class="p-8 rounded-[2rem] bg-indigo-50 border border-indigo-100 italic text-slate-600 font-medium leading-relaxed">
+              <p id="modal-feedback"></p>
+            </div>
+          </div>
+
+          <!-- Action Plan -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+              Action Plan
+            </h4>
+            <div id="modal-action-plan" class="p-8 rounded-[2rem] bg-orange-50 border border-orange-100 text-slate-700 font-bold leading-relaxed"></div>
+          </div>
+
+          <!-- Recording Section (Conditional) -->
+          <div id="modal-recording-section" class="hidden space-y-4">
+            <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M22 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2"></path><rect width="4" height="4" x="14" y="9" rx="1"></rect><path d="M14 9V7a2 2 0 0 1 2-2h4"></path></svg>
+              Recorded Lesson
+            </h4>
+            <div class="p-6 rounded-[2rem] bg-slate-900 flex items-center justify-between group overflow-hidden relative">
+              <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <div>
+                  <p id="modal-recording-title" class="text-white font-bold text-sm mb-0.5"></p>
+                  <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Watch full recorded session</p>
+                </div>
+              </div>
+              <button class="relative z-10 px-6 py-3 bg-white text-slate-900 font-black rounded-xl text-[10px] uppercase tracking-widest hover:bg-slate-100 transition-colors">Play Recording</button>
+              <!-- Mock visual elements -->
+              <div class="absolute right-0 top-0 w-32 h-32 bg-red-500/10 blur-3xl -mr-10 -mt-10"></div>
+            </div>
+          </div>
+
+          <!-- Materials Section (Conditional) -->
+          <div id="modal-materials-section" class="hidden space-y-4">
+            <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-teal-500"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              Learning Materials
+            </h4>
+            <div id="modal-materials-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
+        © 2024 PeerTutor Platform. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
